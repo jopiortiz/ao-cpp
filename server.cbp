@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Server++" />
+		<Option pch_mode="2" />
+		<Option compiler="g++" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-fPIC" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lboost_system" />
+					<Add option="-lboost_filesystem" />
+					<Add option="-lboost_locale" />
+					<Add option="-levent" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fPIC" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="src/Acciones.cpp" />
+		<Unit filename="src/Acciones.h" />
+		<Unit filename="src/Admin.cpp" />
+		<Unit filename="src/Admin.h" />
+		<Unit filename="src/AntiMassClon.cpp" />
+		<Unit filename="src/AntiMassClon.h" />
+		<Unit filename="src/Areas.cpp" />
+		<Unit filename="src/Areas.h" />
+		<Unit filename="src/Banco.cpp" />
+		<Unit filename="src/Banco.h" />
+		<Unit filename="src/ByteBuffer.cpp" />
+		<Unit filename="src/ByteBuffer.h" />
+		<Unit filename="src/ByteQueue.cpp" />
+		<Unit filename="src/ByteQueue.h" />
+		<Unit filename="src/Centinela.cpp" />
+		<Unit filename="src/Centinela.h" />
+		<Unit filename="src/Characters.cpp" />
+		<Unit filename="src/Characters.h" />
+		<Unit filename="src/Clan.cpp" />
+		<Unit filename="src/Clan.h" />
+		<Unit filename="src/ClanPretoriano.cpp" />
+		<Unit filename="src/ClanPretoriano.h" />
+		<Unit filename="src/Clanes.cpp" />
+		<Unit filename="src/Clanes.h" />
+		<Unit filename="src/Comercio.cpp" />
+		<Unit filename="src/Comercio.h" />
+		<Unit filename="src/ComercioUsuario.cpp" />
+		<Unit filename="src/ComercioUsuario.h" />
+		<Unit filename="src/ConsultasPopulares.cpp" />
+		<Unit filename="src/ConsultasPopulares.h" />
+		<Unit filename="src/Crypto.cpp" />
+		<Unit filename="src/Crypto.h" />
+		<Unit filename="src/Declares.cpp" />
+		<Unit filename="src/Declares.h" />
+		<Unit filename="src/Facciones.cpp" />
+		<Unit filename="src/Facciones.h" />
+		<Unit filename="src/FileIO.cpp" />
+		<Unit filename="src/FileIO.h" />
+		<Unit filename="src/Forum.cpp" />
+		<Unit filename="src/Forum.h" />
+		<Unit filename="src/GameLogic.cpp" />
+		<Unit filename="src/GameLogic.h" />
+		<Unit filename="src/General.cpp" />
+		<Unit filename="src/General.h" />
+		<Unit filename="src/Hechizos.cpp" />
+		<Unit filename="src/Hechizos.h" />
+		<Unit filename="src/HexaStrings.cpp" />
+		<Unit filename="src/HexaStrings.h" />
+		<Unit filename="src/IniManager.cpp" />
+		<Unit filename="src/IniManager.h" />
+		<Unit filename="src/InvNpcs.cpp" />
+		<Unit filename="src/InvNpcs.h" />
+		<Unit filename="src/InvUsuario.cpp" />
+		<Unit filename="src/InvUsuario.h" />
+		<Unit filename="src/Invisibles.cpp" />
+		<Unit filename="src/Invisibles.h" />
+		<Unit filename="src/Logs.cpp" />
+		<Unit filename="src/Logs.h" />
+		<Unit filename="src/MapSoundManager.cpp" />
+		<Unit filename="src/MapSoundManager.h" />
+		<Unit filename="src/Matematicas.cpp" />
+		<Unit filename="src/Matematicas.h" />
+		<Unit filename="src/Npcs.cpp" />
+		<Unit filename="src/Npcs.h" />
+		<Unit filename="src/NpcsAI.cpp" />
+		<Unit filename="src/NpcsAI.h" />
+		<Unit filename="src/NuevoTimer.cpp" />
+		<Unit filename="src/NuevoTimer.h" />
+		<Unit filename="src/Parties.cpp" />
+		<Unit filename="src/Parties.h" />
+		<Unit filename="src/Party.cpp" />
+		<Unit filename="src/Party.h" />
+		<Unit filename="src/PathFinding.cpp" />
+		<Unit filename="src/PathFinding.h" />
+		<Unit filename="src/Protocol.cpp" />
+		<Unit filename="src/Protocol.h" />
+		<Unit filename="src/ProtocolHandler.cpp" />
+		<Unit filename="src/ProtocolHandler.h" />
+		<Unit filename="src/SecurityIp.cpp" />
+		<Unit filename="src/SecurityIp.h" />
+		<Unit filename="src/SendData.cpp" />
+		<Unit filename="src/SendData.h" />
+		<Unit filename="src/SistemaCombate.cpp" />
+		<Unit filename="src/SistemaCombate.h" />
+		<Unit filename="src/Sockets.cpp" />
+		<Unit filename="src/Sockets.h" />
+		<Unit filename="src/Solicitud.cpp" />
+		<Unit filename="src/Solicitud.h" />
+		<Unit filename="src/Statistics.cpp" />
+		<Unit filename="src/Statistics.h" />
+		<Unit filename="src/TCP.cpp" />
+		<Unit filename="src/TCP.h" />
+		<Unit filename="src/Timers.cpp" />
+		<Unit filename="src/Timers.h" />
+		<Unit filename="src/Trabajo.cpp" />
+		<Unit filename="src/Trabajo.h" />
+		<Unit filename="src/UserRecords.cpp" />
+		<Unit filename="src/UserRecords.h" />
+		<Unit filename="src/Usuarios.cpp" />
+		<Unit filename="src/Usuarios.h" />
+		<Unit filename="src/allheaders.h" />
+		<Unit filename="src/enums.h" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/praetorians.cpp" />
+		<Unit filename="src/praetorians.h" />
+		<Unit filename="src/sha1.cpp" />
+		<Unit filename="src/sha1.h" />
+		<Unit filename="src/vb6compat.cpp" />
+		<Unit filename="src/vb6compat.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

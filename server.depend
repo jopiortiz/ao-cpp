@@ -1,0 +1,1445 @@
+# depslib dependency file v1.0
+1430071666 source:/home/lordfers/server/src/Acciones.cpp
+	"Acciones.h"
+	"allheaders.h"
+
+1430071666 /home/lordfers/server/src/Acciones.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/vb6compat.h
+	<cstdint>
+	<vector>
+	<algorithm>
+	<cmath>
+	<sstream>
+	<stdexcept>
+	<iostream>
+	<string>
+	<ctime>
+
+1430071666 /home/lordfers/server/src/enums.h
+
+1430071666 /home/lordfers/server/src/allheaders.h
+	"Logs.h"
+	"Party.h"
+	"Statistics.h"
+	"Clan.h"
+	"ComercioUsuario.h"
+	"Forum.h"
+	"UserRecords.h"
+	"praetorians.h"
+	"Facciones.h"
+	"IniManager.h"
+	"ByteBuffer.h"
+	"Trabajo.h"
+	"Banco.h"
+	"Areas.h"
+	"Declares.h"
+	"InvNpcs.h"
+	"SecurityIp.h"
+	"TCP.h"
+	"Sockets.h"
+	"NpcsAI.h"
+	"Hechizos.h"
+	"AntiMassClon.h"
+	"Characters.h"
+	"Solicitud.h"
+	"NuevoTimer.h"
+	"Acciones.h"
+	"InvUsuario.h"
+	"Clanes.h"
+	"Matematicas.h"
+	"PathFinding.h"
+	"ByteQueue.h"
+	"Usuarios.h"
+	"ClanPretoriano.h"
+	"FileIO.h"
+	"Invisibles.h"
+	"Protocol.h"
+	"ProtocolHandler.h"
+	"SendData.h"
+	"GameLogic.h"
+	"ConsultasPopulares.h"
+	"Parties.h"
+	"General.h"
+	"Npcs.h"
+	"Comercio.h"
+	"HexaStrings.h"
+	"Centinela.h"
+	"SistemaCombate.h"
+	"MapSoundManager.h"
+	"Admin.h"
+	"Timers.h"
+
+1430071666 /home/lordfers/server/src/Logs.h
+	<string>
+
+1430071666 /home/lordfers/server/src/Party.h
+	<vector>
+	<memory>
+	<string>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Statistics.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Clan.h
+	<vector>
+	<memory>
+	<string>
+	<set>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/ComercioUsuario.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Forum.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/UserRecords.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/praetorians.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Facciones.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/IniManager.h
+	<vector>
+	<memory>
+	<string>
+	<map>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+
+1430071666 /home/lordfers/server/src/ByteBuffer.h
+	<vector>
+	<memory>
+	<string>
+	<cstdint>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Trabajo.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Banco.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Areas.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Declares.h
+	<vector>
+	<memory>
+	<string>
+	<set>
+	<deque>
+	<map>
+	"vb6compat.h"
+	"enums.h"
+	"Areas.h"
+	"ComercioUsuario.h"
+
+1430071666 /home/lordfers/server/src/InvNpcs.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/SecurityIp.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/TCP.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Sockets.h
+	<vector>
+	<memory>
+	<string>
+	<boost/intrusive/list.hpp>
+	"vb6compat.h"
+	"enums.h"
+	"Crypto.h"
+
+1430071666 /home/lordfers/server/src/Crypto.h
+	<cstdint>
+	<cstdlib>
+	<string>
+	"sha1.h"
+
+1430071666 /home/lordfers/server/src/sha1.h
+	<cstdint>
+	<cstdlib>
+	<string>
+	<vector>
+
+1430071666 /home/lordfers/server/src/NpcsAI.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Hechizos.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/AntiMassClon.h
+	<vector>
+	<memory>
+	<string>
+	<map>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Characters.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Solicitud.h
+	<vector>
+	<memory>
+	<string>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/NuevoTimer.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/InvUsuario.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Clanes.h
+	<vector>
+	<memory>
+	<string>
+	<set>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Matematicas.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/PathFinding.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/ByteQueue.h
+	<vector>
+	<memory>
+	<string>
+	<exception>
+	<iterator>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Usuarios.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/ClanPretoriano.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/FileIO.h
+	<vector>
+	<memory>
+	<string>
+	<iosfwd>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Invisibles.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Protocol.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/ProtocolHandler.h
+
+1430071666 /home/lordfers/server/src/SendData.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/GameLogic.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/ConsultasPopulares.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Parties.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/General.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Npcs.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Comercio.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/HexaStrings.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Centinela.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/SistemaCombate.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/MapSoundManager.h
+	<vector>
+	<memory>
+	<string>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Admin.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/lordfers/server/src/Timers.h
+
+1430071666 source:/home/lordfers/server/src/Admin.cpp
+	"allheaders.h"
+	"Admin.h"
+	<fstream>
+
+1430071666 source:/home/lordfers/server/src/AntiMassClon.cpp
+	"AntiMassClon.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Areas.cpp
+	"Areas.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Banco.cpp
+	"Banco.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/ByteBuffer.cpp
+	"ByteBuffer.h"
+	"allheaders.h"
+	<cstring>
+	<memory>
+
+1430071666 source:/home/lordfers/server/src/ByteQueue.cpp
+	"ByteQueue.h"
+	"allheaders.h"
+	<boost/locale.hpp>
+
+1430071666 source:/home/lordfers/server/src/Centinela.cpp
+	"Centinela.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Characters.cpp
+	"Characters.h"
+	"allheaders.h"
+
+1432696998 source:/home/lordfers/server/src/Clan.cpp
+	"Clan.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Clanes.cpp
+	"Clanes.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/ClanPretoriano.cpp
+	"clsClanPretoriano.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Comercio.cpp
+	"Comercio.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/ComercioUsuario.cpp
+	"ComercioUsuario.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/ConsultasPopulares.cpp
+	"ConsultasPopulares.h"
+	"allheaders.h"
+	<fstream>
+
+1430071666 source:/home/lordfers/server/src/Crypto.cpp
+	"Crypto.h"
+	<random>
+	<algorithm>
+
+1432697232 source:/home/lordfers/server/src/Declares.cpp
+	"allheaders.h"
+	"Declares.h"
+
+1430071666 source:/home/lordfers/server/src/Facciones.cpp
+	"Facciones.h"
+	"allheaders.h"
+
+1432696999 source:/home/lordfers/server/src/FileIO.cpp
+	<iostream>
+	<fstream>
+	"FileIO.h"
+	"allheaders.h"
+	"Crypto.h"
+
+1430071666 source:/home/lordfers/server/src/Forum.cpp
+	"Forum.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/GameLogic.cpp
+	"GameLogic.h"
+	"allheaders.h"
+
+1432684215 source:/home/lordfers/server/src/General.cpp
+	"General.h"
+	"allheaders.h"
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+	<execinfo.h>
+
+1430071666 source:/home/lordfers/server/src/Hechizos.cpp
+	"Hechizos.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/HexaStrings.cpp
+	"HexaStrings.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/IniManager.cpp
+	"IniManager.h"
+	"allheaders.h"
+	<fstream>
+	<boost/algorithm/string.hpp>
+	<unistd.h>
+
+1430071666 source:/home/lordfers/server/src/Invisibles.cpp
+	"Invisibles.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/InvNpcs.cpp
+	"InvNpcs.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/InvUsuario.cpp
+	"InvUsuario.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Logs.cpp
+	<fstream>
+	"Logs.h"
+	"Declares.h"
+	"FileIO.h"
+	"vb6compat.h"
+
+1432728466 source:/home/lordfers/server/src/main.cpp
+	<iostream>
+	"Declares.h"
+	"General.h"
+	"allheaders.h"
+	<cstdlib>
+	<iostream>
+	<stdexcept>
+	<boost/filesystem.hpp>
+
+1430071666 source:/home/lordfers/server/src/MapSoundManager.cpp
+	"MapSoundManager.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Matematicas.cpp
+	"Matematicas.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Npcs.cpp
+	"Npcs.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/NpcsAI.cpp
+	"NpcsAI.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/NuevoTimer.cpp
+	"NuevoTimer.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Parties.cpp
+	"Parties.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Party.cpp
+	<cmath>
+	"Party.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/PathFinding.cpp
+	"PathFinding.h"
+	"allheaders.h"
+	<deque>
+	<limits>
+	<cmath>
+
+1430071666 source:/home/lordfers/server/src/praetorians.cpp
+	"praetorians.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Protocol.cpp
+	"Protocol.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/ProtocolHandler.cpp
+	"ProtocolHandler.h"
+	"allheaders.h"
+	"enums.h"
+	"vb6compat.h"
+	"Crypto.h"
+
+1430071666 source:/home/lordfers/server/src/SecurityIp.cpp
+	"SecurityIp.h"
+	"allheaders.h"
+	<fstream>
+	<map>
+	<exception>
+
+1430071666 source:/home/lordfers/server/src/SendData.cpp
+	"SendData.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/sha1.cpp
+	<stdio.h>
+	<string.h>
+	<stdint.h>
+	"sha1.h"
+
+1430071666 source:/home/lordfers/server/src/SistemaCombate.cpp
+	"SistemaCombate.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Sockets.cpp
+	"Sockets.h"
+	"allheaders.h"
+	<sys/types.h>
+	<sys/stat.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<windows.h>
+	<io.h>
+	<fcntl.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<signal.h>
+	<fcntl.h>
+	<unistd.h>
+	<dirent.h>
+	<event2/event.h>
+	<event2/buffer.h>
+	<event2/bufferevent.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<cstdint>
+	<iomanip>
+	<iostream>
+
+1430071666 source:/home/lordfers/server/src/Solicitud.cpp
+	"Solicitud.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/Statistics.cpp
+	"Statistics.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/TCP.cpp
+	"TCP.h"
+	"allheaders.h"
+	<fstream>
+	"Crypto.h"
+
+1430071666 source:/home/lordfers/server/src/Timers.cpp
+	"Timers.h"
+	"allheaders.h"
+	<iostream>
+
+1430071666 source:/home/lordfers/server/src/Trabajo.cpp
+	"Trabajo.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/UserRecords.cpp
+	"UserRecords.h"
+	"allheaders.h"
+	<fstream>
+
+1430071666 source:/home/lordfers/server/src/Usuarios.cpp
+	"Usuarios.h"
+	"allheaders.h"
+
+1430071666 source:/home/lordfers/server/src/vb6compat.cpp
+	<stdarg.h>
+	<memory>
+	<cstdlib>
+	<cstdio>
+	<cstring>
+	<boost/version.hpp>
+	<boost/filesystem.hpp>
+	<boost/date_time/posix_time/posix_time.hpp>
+	"vb6compat.h"
+
+1580598394 source:/home/jopi/Escritorio/server/src/Admin.cpp
+	"allheaders.h"
+	"Admin.h"
+	<fstream>
+	<boost/filesystem.hpp>
+
+1430071666 /home/jopi/Escritorio/server/src/allheaders.h
+	"Logs.h"
+	"Party.h"
+	"Statistics.h"
+	"Clan.h"
+	"ComercioUsuario.h"
+	"Forum.h"
+	"UserRecords.h"
+	"praetorians.h"
+	"Facciones.h"
+	"IniManager.h"
+	"ByteBuffer.h"
+	"Trabajo.h"
+	"Banco.h"
+	"Areas.h"
+	"Declares.h"
+	"InvNpcs.h"
+	"SecurityIp.h"
+	"TCP.h"
+	"Sockets.h"
+	"NpcsAI.h"
+	"Hechizos.h"
+	"AntiMassClon.h"
+	"Characters.h"
+	"Solicitud.h"
+	"NuevoTimer.h"
+	"Acciones.h"
+	"InvUsuario.h"
+	"Clanes.h"
+	"Matematicas.h"
+	"PathFinding.h"
+	"ByteQueue.h"
+	"Usuarios.h"
+	"ClanPretoriano.h"
+	"FileIO.h"
+	"Invisibles.h"
+	"Protocol.h"
+	"ProtocolHandler.h"
+	"SendData.h"
+	"GameLogic.h"
+	"ConsultasPopulares.h"
+	"Parties.h"
+	"General.h"
+	"Npcs.h"
+	"Comercio.h"
+	"HexaStrings.h"
+	"Centinela.h"
+	"SistemaCombate.h"
+	"MapSoundManager.h"
+	"Admin.h"
+	"Timers.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Logs.h
+	<string>
+
+1430071666 /home/jopi/Escritorio/server/src/Party.h
+	<vector>
+	<memory>
+	<string>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/vb6compat.h
+	<cstdint>
+	<vector>
+	<algorithm>
+	<cmath>
+	<sstream>
+	<stdexcept>
+	<iostream>
+	<string>
+	<ctime>
+
+1580596595 /home/jopi/Escritorio/server/src/enums.h
+
+1430071666 /home/jopi/Escritorio/server/src/Statistics.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Clan.h
+	<vector>
+	<memory>
+	<string>
+	<set>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/ComercioUsuario.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Forum.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/UserRecords.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/praetorians.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Facciones.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/IniManager.h
+	<vector>
+	<memory>
+	<string>
+	<map>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+
+1430071666 /home/jopi/Escritorio/server/src/ByteBuffer.h
+	<vector>
+	<memory>
+	<string>
+	<cstdint>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Trabajo.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Banco.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Areas.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Declares.h
+	<vector>
+	<memory>
+	<string>
+	<set>
+	<deque>
+	<map>
+	"vb6compat.h"
+	"enums.h"
+	"Areas.h"
+	"ComercioUsuario.h"
+
+1430071666 /home/jopi/Escritorio/server/src/InvNpcs.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/SecurityIp.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/TCP.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Sockets.h
+	<vector>
+	<memory>
+	<string>
+	<boost/intrusive/list.hpp>
+	"vb6compat.h"
+	"enums.h"
+	"Crypto.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Crypto.h
+	<cstdint>
+	<cstdlib>
+	<string>
+	"sha1.h"
+
+1430071666 /home/jopi/Escritorio/server/src/sha1.h
+	<cstdint>
+	<cstdlib>
+	<string>
+	<vector>
+
+1430071666 /home/jopi/Escritorio/server/src/NpcsAI.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Hechizos.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/AntiMassClon.h
+	<vector>
+	<memory>
+	<string>
+	<map>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Characters.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Solicitud.h
+	<vector>
+	<memory>
+	<string>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/NuevoTimer.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Acciones.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/InvUsuario.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Clanes.h
+	<vector>
+	<memory>
+	<string>
+	<set>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Matematicas.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/PathFinding.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/ByteQueue.h
+	<vector>
+	<memory>
+	<string>
+	<exception>
+	<iterator>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Usuarios.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/ClanPretoriano.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/FileIO.h
+	<vector>
+	<memory>
+	<string>
+	<iosfwd>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Invisibles.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Protocol.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/ProtocolHandler.h
+
+1430071666 /home/jopi/Escritorio/server/src/SendData.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/GameLogic.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/ConsultasPopulares.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Parties.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/General.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Npcs.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Comercio.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/HexaStrings.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Centinela.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/SistemaCombate.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/MapSoundManager.h
+	<vector>
+	<memory>
+	<string>
+	<boost/noncopyable.hpp>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Admin.h
+	<vector>
+	<memory>
+	<string>
+	"vb6compat.h"
+	"enums.h"
+
+1430071666 /home/jopi/Escritorio/server/src/Timers.h
+
+1430071666 source:/home/jopi/Escritorio/server/src/AntiMassClon.cpp
+	"AntiMassClon.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Areas.cpp
+	"Areas.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Banco.cpp
+	"Banco.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/ByteBuffer.cpp
+	"ByteBuffer.h"
+	"allheaders.h"
+	<cstring>
+	<memory>
+
+1430071666 source:/home/jopi/Escritorio/server/src/ByteQueue.cpp
+	"ByteQueue.h"
+	"allheaders.h"
+	<boost/locale.hpp>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Centinela.cpp
+	"Centinela.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Characters.cpp
+	"Characters.h"
+	"allheaders.h"
+
+1432696998 source:/home/jopi/Escritorio/server/src/Clan.cpp
+	"Clan.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Clanes.cpp
+	"Clanes.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/ClanPretoriano.cpp
+	"clsClanPretoriano.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Comercio.cpp
+	"Comercio.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/ComercioUsuario.cpp
+	"ComercioUsuario.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/ConsultasPopulares.cpp
+	"ConsultasPopulares.h"
+	"allheaders.h"
+	<fstream>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Crypto.cpp
+	"Crypto.h"
+	<random>
+	<algorithm>
+
+1432697232 source:/home/jopi/Escritorio/server/src/Declares.cpp
+	"allheaders.h"
+	"Declares.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Facciones.cpp
+	"Facciones.h"
+	"allheaders.h"
+
+1432696999 source:/home/jopi/Escritorio/server/src/FileIO.cpp
+	<iostream>
+	<fstream>
+	"FileIO.h"
+	"allheaders.h"
+	"Crypto.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Forum.cpp
+	"Forum.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/GameLogic.cpp
+	"GameLogic.h"
+	"allheaders.h"
+
+1432684215 source:/home/jopi/Escritorio/server/src/General.cpp
+	"General.h"
+	"allheaders.h"
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+	<execinfo.h>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Hechizos.cpp
+	"Hechizos.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/HexaStrings.cpp
+	"HexaStrings.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/IniManager.cpp
+	"IniManager.h"
+	"allheaders.h"
+	<fstream>
+	<boost/algorithm/string.hpp>
+	<unistd.h>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Invisibles.cpp
+	"Invisibles.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/InvNpcs.cpp
+	"InvNpcs.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/InvUsuario.cpp
+	"InvUsuario.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Logs.cpp
+	<fstream>
+	"Logs.h"
+	"Declares.h"
+	"FileIO.h"
+	"vb6compat.h"
+
+1432728466 source:/home/jopi/Escritorio/server/src/main.cpp
+	<iostream>
+	"Declares.h"
+	"General.h"
+	"allheaders.h"
+	<cstdlib>
+	<iostream>
+	<stdexcept>
+	<boost/filesystem.hpp>
+
+1430071666 source:/home/jopi/Escritorio/server/src/MapSoundManager.cpp
+	"MapSoundManager.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Matematicas.cpp
+	"Matematicas.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Npcs.cpp
+	"Npcs.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/NpcsAI.cpp
+	"NpcsAI.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/NuevoTimer.cpp
+	"NuevoTimer.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Parties.cpp
+	"Parties.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Party.cpp
+	<cmath>
+	"Party.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/PathFinding.cpp
+	"PathFinding.h"
+	"allheaders.h"
+	<deque>
+	<limits>
+	<cmath>
+
+1430071666 source:/home/jopi/Escritorio/server/src/praetorians.cpp
+	"praetorians.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Protocol.cpp
+	"Protocol.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/SecurityIp.cpp
+	"SecurityIp.h"
+	"allheaders.h"
+	<fstream>
+	<map>
+	<exception>
+
+1430071666 source:/home/jopi/Escritorio/server/src/SendData.cpp
+	"SendData.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/sha1.cpp
+	<stdio.h>
+	<string.h>
+	<stdint.h>
+	"sha1.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/SistemaCombate.cpp
+	"SistemaCombate.h"
+	"allheaders.h"
+
+1580597926 source:/home/jopi/Escritorio/server/src/Sockets.cpp
+	"Sockets.h"
+	"allheaders.h"
+	<sys/types.h>
+	<sys/stat.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<windows.h>
+	<io.h>
+	<fcntl.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<signal.h>
+	<fcntl.h>
+	<unistd.h>
+	<dirent.h>
+	<event2/event.h>
+	<event2/buffer.h>
+	<event2/bufferevent.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<cstdint>
+	<iomanip>
+	<iostream>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Solicitud.cpp
+	"Solicitud.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Statistics.cpp
+	"Statistics.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/TCP.cpp
+	"TCP.h"
+	"allheaders.h"
+	<fstream>
+	"Crypto.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/Timers.cpp
+	"Timers.h"
+	"allheaders.h"
+	<iostream>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Trabajo.cpp
+	"Trabajo.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/UserRecords.cpp
+	"UserRecords.h"
+	"allheaders.h"
+	<fstream>
+
+1430071666 source:/home/jopi/Escritorio/server/src/Usuarios.cpp
+	"Usuarios.h"
+	"allheaders.h"
+
+1430071666 source:/home/jopi/Escritorio/server/src/vb6compat.cpp
+	<stdarg.h>
+	<memory>
+	<cstdlib>
+	<cstdio>
+	<cstring>
+	<boost/version.hpp>
+	<boost/filesystem.hpp>
+	<boost/date_time/posix_time/posix_time.hpp>
+	"vb6compat.h"
+
+1580597286 source:/home/jopi/Escritorio/server/src/Acciones.cpp
+	"Acciones.h"
+	"allheaders.h"
+
+1580597618 source:/home/jopi/Escritorio/server/src/ProtocolHandler.cpp
+	"ProtocolHandler.h"
+	"allheaders.h"
+	"enums.h"
+	"vb6compat.h"
+	"Crypto.h"
+
