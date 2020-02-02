@@ -31,7 +31,7 @@ void UpdateBanUserInv(bool UpdateAll, int UserIndex, int Slot);
 
 void UserRetiraItem(int UserIndex, int i, int Cantidad);
 
-void UserReciveObj(int UserIndex, int ObjIndex, int Cantidad);
+int UserReciveObj(int UserIndex, int ObjIndex, int Cantidad);
 
 void QuitarBancoInvItem(int UserIndex, int Slot, int Cantidad);
 
@@ -39,7 +39,7 @@ void UpdateVentanaBanco(int UserIndex);
 
 void UserDepositaItem(int UserIndex, int Item, int Cantidad);
 
-void UserDejaObj(int UserIndex, int ObjIndex, int Cantidad);
+int UserDejaObj(int UserIndex, int ObjIndex, int Cantidad);
 
 void SendUserBovedaTxt(int sendIndex, int UserIndex);
 

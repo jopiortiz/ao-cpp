@@ -4418,7 +4418,6 @@ void HandleMoveBank(int UserIndex) {
 	}
 
 	UpdateBanUserInv(true, UserIndex, 0);
-	UpdateVentanaBanco(UserIndex);
 
 }
 

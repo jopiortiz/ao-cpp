@@ -108,7 +108,7 @@ void UserRetiraItem(int UserIndex, int BankSlot, int Cantidad) {
 		ObjIndex = UserList[UserIndex].BancoInvent.Object[BankSlot].ObjIndex;
 
 		/* 'Agregamos el obj que compro al inventario */
-        InvSlot = UserReciveObj(Userindex, BankSlot, Cantidad)
+        InvSlot = UserReciveObj(UserIndex, BankSlot, Cantidad);
 
         if (InvSlot > 0) {
 
@@ -140,7 +140,7 @@ int UserReciveObj(int UserIndex, int InvSlot, int Cantidad) {
 	int obji;
 
 	if (UserList[UserIndex].BancoInvent.Object[InvSlot].Amount <= 0) {
-		return;
+		return 0;
 	}
 
 	obji = UserList[UserIndex].BancoInvent.Object[InvSlot].ObjIndex;
@@ -165,7 +165,7 @@ int UserReciveObj(int UserIndex, int InvSlot, int Cantidad) {
 
 			if (Slot > UserList[UserIndex].CurrentInventorySlots) {
 				WriteConsoleMsg(UserIndex, "No podés tener mas objetos.", FontTypeNames_FONTTYPE_INFO);
-				return;
+				return 0;
 			}
 		}
 		UserList[UserIndex].Invent.NroItems = UserList[UserIndex].Invent.NroItems + 1;
@@ -187,6 +187,8 @@ int UserReciveObj(int UserIndex, int InvSlot, int Cantidad) {
 		WriteConsoleMsg(UserIndex, "No podés tener mas objetos.", FontTypeNames_FONTTYPE_INFO);
 
 	}
+
+    return 0;
 
 }
 
@@ -233,7 +235,7 @@ void UserDepositaItem(int UserIndex, int InvSlot, int Cantidad) {
 		ObjIndex = UserList[UserIndex].Invent.Object[InvSlot].ObjIndex;
 
 		/* 'Agregamos el obj que deposita al banco */
-		BankSlot = UserDejaObj(Userindex, InvSlot, Cantidad)
+		BankSlot = UserDejaObj(UserIndex, InvSlot, Cantidad);
 
         if (BankSlot > 0) {
             if (ObjData[ObjIndex].Log == 1) {
@@ -262,7 +264,7 @@ int UserDejaObj(int UserIndex, int InvSlot, int Cantidad) {
 	int obji;
 
 	if (Cantidad < 1) {
-		return;
+		return 0;
 	}
 
 	obji = UserList[UserIndex].Invent.Object[InvSlot].ObjIndex;
@@ -286,7 +288,7 @@ int UserDejaObj(int UserIndex, int InvSlot, int Cantidad) {
 
 			if (Slot > MAX_BANCOINVENTORY_SLOTS) {
 				WriteConsoleMsg(UserIndex, "No tienes mas espacio en el banco!!", FontTypeNames_FONTTYPE_INFO);
-				return;
+				return 0;
 			}
 		}
 
@@ -313,6 +315,9 @@ int UserDejaObj(int UserIndex, int InvSlot, int Cantidad) {
 
 		}
 	}
+
+	return 0;
+
 }
 
 void SendUserBovedaTxt(int sendIndex, int UserIndex) {
