@@ -27,11 +27,14 @@ void IniciarDeposito(int UserIndex) {
 
 	/* 'Hacemos un Update del inventario del usuario */
 	UpdateBanUserInv(true, UserIndex, 0);
+
 	/* 'Actualizamos el dinero */
 	WriteUpdateUserStats(UserIndex);
+
 	/* 'Mostramos la ventana pa' comerciar y ver ladear la osamenta. jajaja */
 	WriteBankInit(UserIndex);
 	UserList[UserIndex].flags.Comerciando = true;
+
 
 }
 
@@ -80,7 +83,7 @@ void UpdateBanUserInv(bool UpdateAll, int UserIndex, int Slot) {
 
 }
 
-void UserRetiraItem(int UserIndex, int i, int Cantidad) {
+void UserRetiraItem(int UserIndex, int BankSlot, int Cantidad) {
 	/* '*************************************************** */
 	/* 'Author: Unknown */
 	/* 'Last Modification: - */
@@ -88,6 +91,7 @@ void UserRetiraItem(int UserIndex, int i, int Cantidad) {
 	/* '*************************************************** */
 
 	int ObjIndex;
+	int InvSlot;
 
 	if (Cantidad < 1) {
 		return;
@@ -95,35 +99,37 @@ void UserRetiraItem(int UserIndex, int i, int Cantidad) {
 
 	WriteUpdateUserStats(UserIndex);
 
-	if (UserList[UserIndex].BancoInvent.Object[i].Amount > 0) {
+	if (UserList[UserIndex].BancoInvent.Object[BankSlot].Amount > 0) {
 
-		if (Cantidad > UserList[UserIndex].BancoInvent.Object[i].Amount) {
-			Cantidad = UserList[UserIndex].BancoInvent.Object[i].Amount;
+		if (Cantidad > UserList[UserIndex].BancoInvent.Object[BankSlot].Amount) {
+			Cantidad = UserList[UserIndex].BancoInvent.Object[BankSlot].Amount;
 		}
 
-		ObjIndex = UserList[UserIndex].BancoInvent.Object[i].ObjIndex;
+		ObjIndex = UserList[UserIndex].BancoInvent.Object[BankSlot].ObjIndex;
 
 		/* 'Agregamos el obj que compro al inventario */
-		UserReciveObj(UserIndex, vb6::CInt(i), Cantidad);
+        InvSlot = UserReciveObj(Userindex, BankSlot, Cantidad)
 
-		if (ObjData[ObjIndex].Log == 1) {
-			LogDesarrollo(
-					UserList[UserIndex].Name + " retiró " + vb6::CStr(Cantidad) + " " + ObjData[ObjIndex].Name + "["
-							+ vb6::CStr(ObjIndex) + "]");
-		}
+        if (InvSlot > 0) {
 
-		/* 'Actualizamos el inventario del usuario */
-		UpdateUserInv(true, UserIndex, 0);
-		/* 'Actualizamos el banco */
-		UpdateBanUserInv(true, UserIndex, 0);
+            if (ObjData[ObjIndex].Log == 1) {
+                LogDesarrollo(UserList[UserIndex].Name + " retiró " + vb6::CStr(Cantidad) + " " + ObjData[ObjIndex].Name + "["
+                                + vb6::CStr(ObjIndex) + "]");
+            }
+
+            /* 'Actualizamos el inventario del usuario */
+            UpdateUserInv(true, UserIndex, 0);
+
+            /* 'Actualizamos el banco */
+            UpdateBanUserInv(true, UserIndex, 0);
+
+        }
+
 	}
-
-	/* 'Actualizamos la ventana de comercio */
-	UpdateVentanaBanco(UserIndex);
 
 }
 
-void UserReciveObj(int UserIndex, int ObjIndex, int Cantidad) {
+int UserReciveObj(int UserIndex, int InvSlot, int Cantidad) {
 	/* '*************************************************** */
 	/* 'Author: Unknown */
 	/* 'Last Modification: - */
@@ -133,11 +139,11 @@ void UserReciveObj(int UserIndex, int ObjIndex, int Cantidad) {
 	int Slot;
 	int obji;
 
-	if (UserList[UserIndex].BancoInvent.Object[ObjIndex].Amount <= 0) {
+	if (UserList[UserIndex].BancoInvent.Object[InvSlot].Amount <= 0) {
 		return;
 	}
 
-	obji = UserList[UserIndex].BancoInvent.Object[ObjIndex].ObjIndex;
+	obji = UserList[UserIndex].BancoInvent.Object[InvSlot].ObjIndex;
 
 	/* '¿Ya tiene un objeto de este tipo? */
 	Slot = 1;
@@ -148,6 +154,7 @@ void UserReciveObj(int UserIndex, int ObjIndex, int Cantidad) {
 		if (Slot > UserList[UserIndex].CurrentInventorySlots) {
 			break;
 		}
+
 	}
 
 	/* 'Sino se fija por un slot vacio */
@@ -166,14 +173,19 @@ void UserReciveObj(int UserIndex, int ObjIndex, int Cantidad) {
 
 	/* 'Mete el obj en el slot */
 	if (UserList[UserIndex].Invent.Object[Slot].Amount + Cantidad <= MAX_INVENTORY_OBJS) {
+
 		/* 'Menor que MAX_INV_OBJS */
 		UserList[UserIndex].Invent.Object[Slot].ObjIndex = obji;
-		UserList[UserIndex].Invent.Object[Slot].Amount = UserList[UserIndex].Invent.Object[Slot].Amount
-				+ Cantidad;
+		UserList[UserIndex].Invent.Object[Slot].Amount = UserList[UserIndex].Invent.Object[Slot].Amount + Cantidad;
 
-		QuitarBancoInvItem(UserIndex, vb6::CByte(ObjIndex), Cantidad);
+		QuitarBancoInvItem(UserIndex, vb6::CByte(InvSlot), Cantidad);
+
+		return Slot;
+
 	} else {
+
 		WriteConsoleMsg(UserIndex, "No podés tener mas objetos.", FontTypeNames_FONTTYPE_INFO);
+
 	}
 
 }
@@ -202,17 +214,7 @@ void QuitarBancoInvItem(int UserIndex, int Slot, int Cantidad) {
 
 }
 
-void UpdateVentanaBanco(int UserIndex) {
-	/* '*************************************************** */
-	/* 'Author: Unknown */
-	/* 'Last Modification: - */
-	/* ' */
-	/* '*************************************************** */
-
-	WriteBankOK(UserIndex);
-}
-
-void UserDepositaItem(int UserIndex, int Item, int Cantidad) {
+void UserDepositaItem(int UserIndex, int InvSlot, int Cantidad) {
 	/* '*************************************************** */
 	/* 'Author: Unknown */
 	/* 'Last Modification: - */
@@ -220,36 +222,36 @@ void UserDepositaItem(int UserIndex, int Item, int Cantidad) {
 	/* '*************************************************** */
 
 	int ObjIndex;
+    int BankSlot;
 
-	if (UserList[UserIndex].Invent.Object[Item].Amount > 0 && Cantidad > 0) {
+	if (UserList[UserIndex].Invent.Object[InvSlot].Amount > 0 && Cantidad > 0) {
 
-		if (Cantidad > UserList[UserIndex].Invent.Object[Item].Amount) {
-			Cantidad = UserList[UserIndex].Invent.Object[Item].Amount;
+		if (Cantidad > UserList[UserIndex].Invent.Object[InvSlot].Amount) {
+			Cantidad = UserList[UserIndex].Invent.Object[InvSlot].Amount;
 		}
 
-		ObjIndex = UserList[UserIndex].Invent.Object[Item].ObjIndex;
+		ObjIndex = UserList[UserIndex].Invent.Object[InvSlot].ObjIndex;
 
 		/* 'Agregamos el obj que deposita al banco */
-		UserDejaObj(UserIndex, vb6::CInt(Item), Cantidad);
+		BankSlot = UserDejaObj(Userindex, InvSlot, Cantidad)
 
-		if (ObjData[ObjIndex].Log == 1) {
-			LogDesarrollo(
-					UserList[UserIndex].Name + " depositó " + vb6::CStr(Cantidad) + " "
-							+ ObjData[ObjIndex].Name + "[" + vb6::CStr(ObjIndex) + "]");
-		}
+        if (BankSlot > 0) {
+            if (ObjData[ObjIndex].Log == 1) {
+                LogDesarrollo(UserList[UserIndex].Name + " depositó " + vb6::CStr(Cantidad) + " "
+                                + ObjData[ObjIndex].Name + "[" + vb6::CStr(ObjIndex) + "]");
+            }
 
-		/* 'Actualizamos el inventario del usuario */
-		UpdateUserInv(true, UserIndex, 0);
+            /* 'Actualizamos el inventario del usuario */
+            UpdateUserInv(true, UserIndex, 0);
 
-		/* 'Actualizamos el inventario del banco */
-		UpdateBanUserInv(true, UserIndex, 0);
+            /* 'Actualizamos el inventario del banco */
+            UpdateBanUserInv(true, UserIndex, 0);
+        }
 	}
 
-	/* 'Actualizamos la ventana del banco */
-	UpdateVentanaBanco(UserIndex);
 }
 
-void UserDejaObj(int UserIndex, int ObjIndex, int Cantidad) {
+int UserDejaObj(int UserIndex, int InvSlot, int Cantidad) {
 	/* '*************************************************** */
 	/* 'Author: Unknown */
 	/* 'Last Modification: - */
@@ -263,7 +265,7 @@ void UserDejaObj(int UserIndex, int ObjIndex, int Cantidad) {
 		return;
 	}
 
-	obji = UserList[UserIndex].Invent.Object[ObjIndex].ObjIndex;
+	obji = UserList[UserIndex].Invent.Object[InvSlot].ObjIndex;
 
 	/* '¿Ya tiene un objeto de este tipo? */
 	Slot = 1;
@@ -283,8 +285,7 @@ void UserDejaObj(int UserIndex, int ObjIndex, int Cantidad) {
 			Slot = Slot + 1;
 
 			if (Slot > MAX_BANCOINVENTORY_SLOTS) {
-				WriteConsoleMsg(UserIndex, "No tienes mas espacio en el banco!!",
-						FontTypeNames_FONTTYPE_INFO);
+				WriteConsoleMsg(UserIndex, "No tienes mas espacio en el banco!!", FontTypeNames_FONTTYPE_INFO);
 				return;
 			}
 		}
@@ -300,12 +301,16 @@ void UserDejaObj(int UserIndex, int ObjIndex, int Cantidad) {
 			/* 'Menor que MAX_INV_OBJS */
 			UserList[UserIndex].BancoInvent.Object[Slot].ObjIndex = obji;
 			UserList[UserIndex].BancoInvent.Object[Slot].Amount =
-					UserList[UserIndex].BancoInvent.Object[Slot].Amount + Cantidad;
+            UserList[UserIndex].BancoInvent.Object[Slot].Amount + Cantidad;
 
-			QuitarUserInvItem(UserIndex, vb6::CByte(ObjIndex), Cantidad);
+			QuitarUserInvItem(UserIndex, InvSlot, Cantidad);
+
+			return Slot;
+
 		} else {
-			WriteConsoleMsg(UserIndex, "El banco no puede cargar tantos objetos.",
-					FontTypeNames_FONTTYPE_INFO);
+
+			WriteConsoleMsg(UserIndex, "El banco no puede cargar tantos objetos.", FontTypeNames_FONTTYPE_INFO);
+
 		}
 	}
 }
@@ -325,10 +330,9 @@ void SendUserBovedaTxt(int sendIndex, int UserIndex) {
 
 	for (j = (1); j <= (MAX_BANCOINVENTORY_SLOTS); j++) {
 		if (UserList[UserIndex].BancoInvent.Object[j].ObjIndex > 0) {
-			WriteConsoleMsg(sendIndex,
-					"Objeto " + vb6::CStr(j) + " " + ObjData[UserList[UserIndex].BancoInvent.Object[j].ObjIndex].Name
-							+ " Cantidad:" + vb6::CStr(UserList[UserIndex].BancoInvent.Object[j].Amount),
-					FontTypeNames_FONTTYPE_INFO);
+			WriteConsoleMsg(sendIndex,"Objeto " + vb6::CStr(j) + " " + ObjData[UserList[UserIndex].BancoInvent.Object[j].ObjIndex].Name
+                                        + " Cantidad:" + vb6::CStr(UserList[UserIndex].BancoInvent.Object[j].Amount),
+                                        FontTypeNames_FONTTYPE_INFO);
 		}
 	}
 }
