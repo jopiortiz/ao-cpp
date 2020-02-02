@@ -17,6 +17,11 @@
 					<Add option="-fPIC" />
 					<Add option="-Og" />
 					<Add option="-g" />
+					<Add option="-fstack-protector" />
+					<Add option="-MMD" />
+					<Add option="-march=native" />
+					<Add option="-rdynamic" />
+					<Add option="-D_GLIBCXX_DEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-lboost_system" />
