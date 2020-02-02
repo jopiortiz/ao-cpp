@@ -68,9 +68,9 @@ int IntervaloImprimirEnConsola = 1;
 /* 'BALANCE */
 int PorcentajeRecuperoMana;
 
-int DificultadPescar
-int DificultadTalar
-int DificultadMinar
+int DificultadPescar;
+int DificultadTalar;
+int DificultadMinar;
 
 int MinutosWs;
 int MinutosGuardarUsuarios;
