@@ -41,8 +41,8 @@
 *.layout
 *.depend
 # generated directories
-bin/
-obj/
+bin/**
+obj/**
 
 ### Linux ###
 *~
