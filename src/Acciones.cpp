@@ -41,8 +41,7 @@ void Accion(int UserIndex, int Map, int X, int Y) {
 
 	/* FIXME: ON ERROR RESUME NEXT */
 	/* '¿Rango Visión? (ToxicWaste) */
-	if ((vb6::Abs(UserList[UserIndex].Pos.Y - Y) > RANGO_VISION_Y)
-			|| (vb6::Abs(UserList[UserIndex].Pos.X - X) > RANGO_VISION_X)) {
+	if ((vb6::Abs(UserList[UserIndex].Pos.Y - Y) > RANGO_VISION_Y) || (vb6::Abs(UserList[UserIndex].Pos.X - X) > RANGO_VISION_X)) {
 		return;
 	}
 
@@ -50,12 +49,14 @@ void Accion(int UserIndex, int Map, int X, int Y) {
 	if (InMapBounds(Map, X, Y)) {
 		/* 'Acciones NPCs */
 		if (MapData[Map][X][Y].NpcIndex > 0) {
+			
 			tempIndex = MapData[Map][X][Y].NpcIndex;
 
 			/* 'Set the target NPC */
 			UserList[UserIndex].flags.TargetNPC = tempIndex;
 
 			if (Npclist[tempIndex].Comercia == 1) {
+				
 				/* '¿Esta el user muerto? Si es asi no puede comerciar */
 				if (UserList[UserIndex].flags.Muerto == 1) {
 					WriteConsoleMsg(UserIndex, "¡¡Estás muerto!!",
@@ -68,11 +69,8 @@ void Accion(int UserIndex, int Map, int X, int Y) {
 					return;
 				}
 
-				if (Distancia(Npclist[tempIndex].Pos, UserList[UserIndex].Pos)
-						> 3) {
-					WriteConsoleMsg(UserIndex,
-							"Estás demasiado lejos del vendedor.",
-							FontTypeNames_FONTTYPE_INFO);
+				if (Distancia(Npclist[tempIndex].Pos, UserList[UserIndex].Pos) > 3) {
+					WriteConsoleMsg(UserIndex, "Estás demasiado lejos del vendedor.", FontTypeNames_FONTTYPE_INFO);
 					return;
 				}
 
@@ -82,8 +80,7 @@ void Accion(int UserIndex, int Map, int X, int Y) {
 			} else if (Npclist[tempIndex].NPCtype == eNPCType_Banquero) {
 				/* '¿Esta el user muerto? Si es asi no puede comerciar */
 				if (UserList[UserIndex].flags.Muerto == 1) {
-					WriteConsoleMsg(UserIndex, "¡¡Estás muerto!!",
-							FontTypeNames_FONTTYPE_INFO);
+					WriteConsoleMsg(UserIndex, "¡¡Estás muerto!!", FontTypeNames_FONTTYPE_INFO);
 					return;
 				}
 
@@ -92,11 +89,8 @@ void Accion(int UserIndex, int Map, int X, int Y) {
 					return;
 				}
 
-				if (Distancia(Npclist[tempIndex].Pos, UserList[UserIndex].Pos)
-						> 3) {
-					WriteConsoleMsg(UserIndex,
-							"Estás demasiado lejos del vendedor.",
-							FontTypeNames_FONTTYPE_INFO);
+				if (Distancia(Npclist[tempIndex].Pos, UserList[UserIndex].Pos) > 3) {
+					WriteConsoleMsg(UserIndex, "Estás demasiado lejos del vendedor.", FontTypeNames_FONTTYPE_INFO);
 					return;
 				}
 
@@ -106,16 +100,12 @@ void Accion(int UserIndex, int Map, int X, int Y) {
 			} else if (Npclist[tempIndex].NPCtype == eNPCType_Revividor) {
 
 				if (Distancia(UserList[UserIndex].Pos, Npclist[tempIndex].Pos) > 10) {
-					WriteConsoleMsg(UserIndex,
-							"El sacerdote no puede curarte debido a que estás demasiado lejos.",
-							FontTypeNames_FONTTYPE_INFO);
+					WriteConsoleMsg(UserIndex, "El sacerdote no puede curarte debido a que estás demasiado lejos.", FontTypeNames_FONTTYPE_INFO);
 					return;
 				}
 
 				/* 'Revivimos si es necesario */
-				if (UserList[UserIndex].flags.Muerto == 1
-						&& (Npclist[tempIndex].NPCtype == eNPCType_Revividor
-								|| EsNewbie(UserIndex))) {
+				if (UserList[UserIndex].flags.Muerto == 1 && (Npclist[tempIndex].NPCtype == eNPCType_Revividor || EsNewbie(UserIndex))) {
 					RevivirUsuario(UserIndex);
 				}
 
@@ -240,8 +230,7 @@ void AccionParaForo(int Map, int X, int Y, int UserIndex) {
 	Pos.Y = Y;
 
 	if (Distancia(Pos, UserList[UserIndex].Pos) > 2) {
-		WriteConsoleMsg(UserIndex, "Estas demasiado lejos.",
-				FontTypeNames_FONTTYPE_INFO);
+		WriteConsoleMsg(UserIndex, "Estas demasiado lejos.", FontTypeNames_FONTTYPE_INFO);
 		return;
 	}
 
@@ -261,8 +250,8 @@ void AccionParaPuerta(int Map, int X, int Y, int UserIndex) {
 
 	/* FIXME: ON ERROR RESUME NEXT */
 
-	if (!(Distance(UserList[UserIndex].Pos.X, UserList[UserIndex].Pos.Y, X, Y)
-			> 2)) {
+	if (!(Distance(UserList[UserIndex].Pos.X, UserList[UserIndex].Pos.Y, X, Y) > 2)) {
+		
 		if (ObjData[MapData[Map][X][Y].ObjInfo.ObjIndex].Llave == 0) {
 			if (ObjData[MapData[Map][X][Y].ObjInfo.ObjIndex].Cerrada == 1) {
 				/* 'Abre la puerta */
@@ -293,15 +282,14 @@ void AccionParaPuerta(int Map, int X, int Y, int UserIndex) {
 							"La puerta esta cerrada con llave.",
 							FontTypeNames_FONTTYPE_INFO);
 				}
+
 			} else {
+
 				/* 'Cierra puerta */
 				MapData[Map][X][Y].ObjInfo.ObjIndex =
 						ObjData[MapData[Map][X][Y].ObjInfo.ObjIndex].IndexCerrada;
 
-				SendToAreaByPos(Map, X, Y,
-						PrepareMessageObjectCreate(
-								ObjData[MapData[Map][X][Y].ObjInfo.ObjIndex].GrhIndex,
-								X, Y));
+				SendToAreaByPos(Map, X, Y, PrepareMessageObjectCreate(ObjData[MapData[Map][X][Y].ObjInfo.ObjIndex].GrhIndex, X, Y));
 
 				MapData[Map][X][Y].Blocked = 1;
 				MapData[Map][X - 1][Y].Blocked = 1;
@@ -313,15 +301,13 @@ void AccionParaPuerta(int Map, int X, int Y, int UserIndex) {
 				SendData(SendTarget_ToPCArea, UserIndex, msg);
 			}
 
-			UserList[UserIndex].flags.TargetObj =
-					MapData[Map][X][Y].ObjInfo.ObjIndex;
+			UserList[UserIndex].flags.TargetObj = MapData[Map][X][Y].ObjInfo.ObjIndex;
+
 		} else {
-			WriteConsoleMsg(UserIndex, "La puerta está cerrada con llave.",
-					FontTypeNames_FONTTYPE_INFO);
+			WriteConsoleMsg(UserIndex, "La puerta está cerrada con llave.", FontTypeNames_FONTTYPE_INFO);
 		}
 	} else {
-		WriteConsoleMsg(UserIndex, "Estás demasiado lejos.",
-				FontTypeNames_FONTTYPE_INFO);
+		WriteConsoleMsg(UserIndex, "Estás demasiado lejos.", FontTypeNames_FONTTYPE_INFO);
 	}
 
 }
@@ -366,15 +352,12 @@ void AccionParaRamita(int Map, int X, int Y, int UserIndex) {
 	Pos.Y = Y;
 
 	if (Distancia(Pos, UserList[UserIndex].Pos) > 2) {
-		WriteConsoleMsg(UserIndex, "Estás demasiado lejos.",
-				FontTypeNames_FONTTYPE_INFO);
+		WriteConsoleMsg(UserIndex, "Estás demasiado lejos.", FontTypeNames_FONTTYPE_INFO);
 		return;
 	}
 
-	if (MapData[Map][X][Y].trigger == eTrigger_ZONASEGURA
-			|| MapInfo[Map].Pk == false) {
-		WriteConsoleMsg(UserIndex, "No puedes hacer fogatas en zona segura.",
-				FontTypeNames_FONTTYPE_INFO);
+	if (MapData[Map][X][Y].trigger == eTrigger_ZONASEGURA || MapInfo[Map].Pk == false) {
+		WriteConsoleMsg(UserIndex, "No puedes hacer fogatas en zona segura.", FontTypeNames_FONTTYPE_INFO);
 		return;
 	}
 
@@ -394,12 +377,12 @@ void AccionParaRamita(int Map, int X, int Y, int UserIndex) {
 	exito = RandomNumber(1, Suerte);
 
 	if (exito == 1) {
+
 		if (MapInfo[UserList[UserIndex].Pos.Map].Zona != Ciudad) {
 			Obj.ObjIndex = FOGATA;
 			Obj.Amount = 1;
 
-			WriteConsoleMsg(UserIndex, "Has prendido la fogata.",
-					FontTypeNames_FONTTYPE_INFO);
+			WriteConsoleMsg(UserIndex, "Has prendido la fogata.", FontTypeNames_FONTTYPE_INFO);
 
 			MakeObj(Obj, Map, X, Y);
 
@@ -411,15 +394,14 @@ void AccionParaRamita(int Map, int X, int Y, int UserIndex) {
 			TrashCollector.insert(Fogatita);
 
 			SubirSkill(UserIndex, eSkill_Supervivencia, true);
+
 		} else {
-			WriteConsoleMsg(UserIndex,
-					"La ley impide realizar fogatas en las ciudades.",
-					FontTypeNames_FONTTYPE_INFO);
+			WriteConsoleMsg(UserIndex, "La ley impide realizar fogatas en las ciudades.", FontTypeNames_FONTTYPE_INFO);
 			return;
 		}
+
 	} else {
-		WriteConsoleMsg(UserIndex, "No has podido hacer fuego.",
-				FontTypeNames_FONTTYPE_INFO);
+		WriteConsoleMsg(UserIndex, "No has podido hacer fuego.", FontTypeNames_FONTTYPE_INFO);
 		SubirSkill(UserIndex, eSkill_Supervivencia, false);
 	}
 

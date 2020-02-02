@@ -45,4 +45,6 @@ void AccionParaCartel(int Map, int X, int Y, int UserIndex);
 
 void AccionParaRamita(int Map, int X, int Y, int UserIndex);
 
+void AccionParaSacerdote(int UserIndex);
+
 #endif

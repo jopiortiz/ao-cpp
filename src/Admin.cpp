@@ -66,8 +66,11 @@ int IntervaloOwnedNpc;
 int IntervaloImprimirEnConsola = 1;
 
 /* 'BALANCE */
-
 int PorcentajeRecuperoMana;
+
+int DificultadPescar
+int DificultadTalar
+int DificultadMinar
 
 int MinutosWs;
 int MinutosGuardarUsuarios;
@@ -80,15 +83,14 @@ bool Lloviendo;
 bool DeNoche;
 
 bool VersionOK(std::string Ver) {
-	bool retval;
 	/* '*************************************************** */
 	/* 'Author: Unknown */
 	/* 'Last Modification: - */
 	/* ' */
 	/* '*************************************************** */
 
-	retval = (Ver == ULTIMAVERSION);
-	return retval;
+	return (Ver == ULTIMAVERSION);
+
 }
 
 void ReSpawnOrigPosNpcs() {
@@ -107,8 +109,7 @@ void ReSpawnOrigPosNpcs() {
 		/* 'OJO */
 		if (Npclist[i].flags.NPCActive) {
 
-			if (InMapBounds(Npclist[i].Orig.Map, Npclist[i].Orig.X,
-					Npclist[i].Orig.Y) && Npclist[i].Numero == Guardias) {
+			if (InMapBounds(Npclist[i].Orig.Map, Npclist[i].Orig.X, Npclist[i].Orig.Y) && Npclist[i].Numero == Guardias) {
 				MiNPC = Npclist[i];
 				QuitarNPC(i);
 				ReSpawnNpc(MiNPC);
@@ -127,9 +128,7 @@ void ReSpawnOrigPosNpcs() {
 void WorldSave() {
 	int loopX;
 
-	SendData(SendTarget_ToAll, 0,
-			PrepareMessageConsoleMsg("Servidor> Iniciando WorldSave",
-					FontTypeNames_FONTTYPE_SERVER));
+	SendData(SendTarget_ToAll, 0, PrepareMessageConsoleMsg("Servidor> Iniciando WorldSave", FontTypeNames_FONTTYPE_SERVER));
 
 	/* 'respawn de los guardias en las pos originales */
 	ReSpawnOrigPosNpcs();
@@ -150,7 +149,7 @@ void WorldSave() {
 	}
 
 	if (FileExist(GetDatPath(DATPATH::bkNpcs))) {
-		boost::filesystem::remove(GetDatPath(DATPATH::bkNpcs));
+		vb6::Kill(GetDatPath(DATPATH::bkNpcs));
 	}
 
 	std::ofstream npcfile;
@@ -164,9 +163,7 @@ void WorldSave() {
 
 	SaveForums();
 
-	SendData(SendTarget_ToAll, 0,
-			PrepareMessageConsoleMsg("Servidor> WorldSave ha concluído.",
-					FontTypeNames_FONTTYPE_SERVER));
+	SendData(SendTarget_ToAll, 0, PrepareMessageConsoleMsg("Servidor> WorldSave ha concluído.", FontTypeNames_FONTTYPE_SERVER));
 }
 
 void ServerShutdown() {
@@ -230,21 +227,17 @@ void Encarcelar(int UserIndex, int Minutos, std::string GmName) {
 	/* ' */
 	/* '*************************************************** */
 
-	UserList[UserIndex].Counters.Pena = Minutos;
+	UserList[UserIndex].Counters.Pena = Minutos * 60;
 
 	WarpUserChar(UserIndex, Prision.Map, Prision.X, Prision.Y, true);
 
 	if (vb6::LenB(GmName) == 0) {
-		WriteConsoleMsg(UserIndex,
-				"Has sido encarcelado, deberás permanecer en la cárcel "
-						+ std::to_string(Minutos) + " minutos.",
-				FontTypeNames_FONTTYPE_INFO);
+		WriteConsoleMsg(UserIndex, "Has sido encarcelado, deberás permanecer en la cárcel " + vb6::CStr(Minutos) + " minutos.", FontTypeNames_FONTTYPE_INFO);
+	
 	} else {
-		WriteConsoleMsg(UserIndex,
-				GmName + " te ha encarcelado, deberás permanecer en la cárcel "
-						+ std::to_string(Minutos) + " minutos.",
-				FontTypeNames_FONTTYPE_INFO);
+		WriteConsoleMsg(UserIndex, GmName + " te ha encarcelado, deberás permanecer en la cárcel " + vb6::CStr(Minutos) + " minutos.", FontTypeNames_FONTTYPE_INFO);
 	}
+	
 	if (UserList[UserIndex].flags.Traveling == 1) {
 		UserList[UserIndex].flags.Traveling = 0;
 		UserList[UserIndex].Counters.goHome = 0;
@@ -260,7 +253,7 @@ void BorrarUsuario(std::string UserName) {
 	/* '*************************************************** */
 
 	if (FileExist(GetCharPath(UserName), 0)) {
-		boost::filesystem::remove(GetCharPath(UserName));
+		vb6::Kill(GetCharPath(UserName));
 	}
 }
 
@@ -488,17 +481,14 @@ void BanCharacter(int bannerUserIndex, std::string UserName,
 		WriteConsoleMsg(bannerUserIndex, "El usuario no está online.",
 				FontTypeNames_FONTTYPE_TALK);
 
-		if (FileExist(GetCharPath(UserName), 0)) {
+		if (PersonajeExiste(UserName)) {
 			if (UserTieneMasPrivilegiosQue(UserName, bannerUserIndex)) {
 				WriteConsoleMsg(bannerUserIndex,
 						"No puedes banear a al alguien de mayor jerarquía.",
 						FontTypeNames_FONTTYPE_INFO);
 			} else {
-				if (GetVar(GetCharPath(UserName), "FLAGS", "Ban")
-						!= "0") {
-					WriteConsoleMsg(bannerUserIndex,
-							"El personaje ya se encuentra baneado.",
-							FontTypeNames_FONTTYPE_INFO);
+				if (BANCheck(UserName)) {
+					WriteConsoleMsg(bannerUserIndex, "El personaje ya se encuentra baneado.", FontTypeNames_FONTTYPE_INFO);
 				} else {
 					LogBanFromName(UserName, bannerUserIndex, Reason);
 					SendData(SendTarget_ToAdminsButCounselorsAndRms, 0,
