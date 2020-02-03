@@ -32,8 +32,8 @@
 				<Compiler>
 					<Add option="-static" />
 					<Add option="-DWIN32" />
-					<Add directory="boost" />
-					<Add directory="libevent" />
+					<Add directory="librerias/boost" />
+					<Add directory="librerias/libevent" />
 				</Compiler>
 				<Linker>
 					<Add library="iconv" />
