@@ -100,7 +100,7 @@ void clsIniManager::AddKey(std::string Main, std::string key, std::string value)
 void clsIniManager::DumpFile(std::string File, bool sync_fs) {
 	//FIXME
 	//throw std::runtime_error("DumpFile not implemented, file: " + File);
-#if 0
+#ifdef WIN32
 	std::ofstream f;
 	f.open(File, std::ios::out | std::ios::trunc);
 
