@@ -1,0 +1,8 @@
+Descargan las librerias de acá:
+
+    "http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-boost-1.72.0-1-any.pkg.tar.xz"
+    "https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz"
+
+Luego las descomprimen en ESTA carpeta.
+
+Y les cambian el nombre (a las carpetas) por el nombre de la libreria SIN LA VERSION. Como "boost" y "libevent"
