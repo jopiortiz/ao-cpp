@@ -6,18 +6,12 @@
 		<Option pch_mode="2" />
 		<Option compiler="g++" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/server" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+			<Target title="Linux">
+				<Option output="bin/Linux/server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Linux/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O3" />
-					<Add option="-std=c++1z" />
-					<Add option="-fPIC" />
-					<Add option="-Og" />
-					<Add option="-g" />
-					<Add option="-fstack-protector" />
 					<Add option="-MMD" />
 					<Add option="-march=native" />
 					<Add option="-rdynamic" />
@@ -30,10 +24,37 @@
 					<Add option="-levent" />
 				</Linker>
 			</Target>
+			<Target title="Windows">
+				<Option output="bin/Windows/server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Windows/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-static" />
+					<Add option="-DWIN32" />
+					<Add directory="boost" />
+					<Add directory="libevent" />
+				</Compiler>
+				<Linker>
+					<Add library="iconv" />
+					<Add library="ws2_32" />
+					<Add library="librerias/libevent/lib/libevent.a" />
+					<Add library="librerias/libevent/lib/libevent_core.a" />
+					<Add library="librerias/libevent/lib/libevent_extra.a" />
+					<Add library="librerias/boost/lib/libboost_filesystem-mt.a" />
+					<Add library="librerias/boost/lib/libboost_locale-mt.a" />
+					<Add library="librerias/boost/lib/libboost_system-mt.a" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-O3" />
+			<Add option="-std=c++1z" />
+			<Add option="-Og" />
+			<Add option="-g" />
 			<Add option="-Wall" />
 			<Add option="-fPIC" />
+			<Add option="-fstack-protector" />
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="src/Acciones.cpp" />
@@ -148,6 +169,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
