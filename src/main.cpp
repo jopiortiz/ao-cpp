@@ -74,7 +74,7 @@ void redimGlobalArrays() {
 	Ciudades.redim(1, NUMCIUDADES); /* XXX */
 	distanceToCities.redim(0); /* XXX */
 	Records.redim(0); /* XXX */
-	Centinela.redim(1, NRO_CENTINELA); /* XXX */
+	Centinela.redim(1, NUM_CENTINELAS); /* XXX */
 }
 
 static void atexit_func() {

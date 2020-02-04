@@ -46,7 +46,7 @@ extern bool centinelaActivado;
 
 /* 'Guardo cuando voy a resetear a la lista de usuarios del centinela */
 
-extern const int NRO_CENTINELA;
+extern const int NUM_CENTINELAS;
 extern vb6::array<struct tCentinela> Centinela;
 
  void CambiarEstado(int gmIndex);
