@@ -724,8 +724,7 @@ void GrabarMapa(int Map, bool loadFromBackup) {
 			/* ' No hacer backup de los NPCs inválidos (Pretorianos, Mascotas, Invocados y Centinela) */
 			if (MapData[Map][X][Y].NpcIndex) {
 				NpcInvalido = (Npclist[MapData[Map][X][Y].NpcIndex].NPCtype == eNPCType_Pretoriano)
-						|| (Npclist[MapData[Map][X][Y].NpcIndex].MaestroUser > 0)
-						|| EsCentinela(MapData[Map][X][Y].NpcIndex);
+						|| (Npclist[MapData[Map][X][Y].NpcIndex].MaestroUser > 0);
 
 				if (!NpcInvalido) {
 					ByFlags = ByFlags | 2;

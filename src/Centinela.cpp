@@ -42,560 +42,318 @@
 /* '   - Added several paralel checks */
 /* '***************************************************************** */
 
-/* 'Índice del NPC en el .dat */
-static const int NPC_CENTINELA = 16;
+bool centinelaActivado;          				//Esta activado?
 
-/* 'Tiempo inicial en minutos. No reducir sin antes revisar el timer que maneja estos datos. */
-static const int TIEMPO_INICIAL = 2;
-/* 'Tiempo minimo fijo para volver a pasar */
-static const int TIEMPO_PASAR_BASE = 20;
-/* 'Tiempo máximo para el random para que el centinela vuelva a pasar */
-static const int TIEMPO_PASAR_RANDOM = 10;
+static const int NUM_CENTINELAS  = 5;       	//Cantidad de centinelas.
+static const int NUM_NPC  = 16;     			//NpcNum del centinela.
 
-bool centinelaActivado;
+static const int MAPA_EXPLOTAR = 15;     		//Numero de mapa en la qe se pinchan usuarios.
+static const int X_EXPLOTAR = 50;        		//X
+static const int Y_EXPLOTAR = 50;        		//Y
 
-/* 'Guardo cuando voy a resetear a la lista de usuarios del centinela */
-static int centinelaStartTime;
-static int centinelaInterval;
+static const long LIMITE_TIEMPO  = 120000;  	//Tiempo limite (milisegundos), 2 minutos.
+static const int CARCEL_TIEMPO = 5;         	//Minutos en la carcel
+static const long REVISION_TIEMPO = 1800000;	//Tiempo de cada revision (milisegundos) 1.800.000 = 30 minutos (60 segundos * 30 minutos) * 1000 milisegundos
 
-static bool DetenerAsignacion;
-
-const int NRO_CENTINELA = 5;
 vb6::array<struct tCentinela> Centinela;
 
-void CallUserAttention() {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 03/10/2010 */
-	/* 'Makes noise and FX to call the user's attention. */
-	/* '03/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
+void CambiarEstado(int gmIndex) {
+	/*
+		Author: Unknown
+		Last Modification: 13/11/2019 (Recox)
 
-	/* 'Esta el sistema habilitado? */
-	if (!centinelaActivado) {
-		return;
-	}
+		* Cambia el estado del centinela.
 
-	int index;
-	int UserIndex;
+		13/11/2019 Recox: La variable isCentinelaActivated tiene un nombre mas descriptivo
+	*/
 
-	int TActual;
-	TActual = (vb6::GetTickCount());
+    // Lo cambiamos en la memoria.
+    centinelaActivado = !centinelaActivado;
 
-	/* ' Chequea todos los centinelas */
-	for (index = (1); index <= (NRO_CENTINELA); index++) {
+    // Lo cambiamos en el Server.ini
+    WriteVar(GetIniPath("server.ini"), "INIT", "CentinelaAuditoriaTrabajoActivo", centinelaActivado ? "1" : "0");
 
-		/* ' Centinela activo? */
-		if (Centinela[index].Activo) {
+    // Preparamos el aviso por consola.
+    std::string message;
+    message = UserList[gmIndex].Name + " cambio el estado del Centinela a " + (centinelaActivado ? " ACTIVADO." : " DESACTIVADO.");
 
-			UserIndex = Centinela[index].RevisandoUserIndex;
+    // Mandamos el aviso por consola.
+    SendData(SendTarget::SendTarget_ToAll, 0, PrepareMessageConsoleMsg(message, FontTypeNames::FontTypeNames_FONTTYPE_CENTINELA));
 
-			/* ' Esta revisando un usuario? */
-			if (UserIndex != 0) {
-
-				if (getInterval(TActual, Centinela[index].SpawnTime) >= 5000) {
-
-					if (!UserList[UserIndex].flags.CentinelaOK) {
-						WritePlayWave(UserIndex, SND_WARP, Npclist[Centinela[index].NpcIndex].Pos.X,
-								Npclist[Centinela[index].NpcIndex].Pos.Y);
-						WriteCreateFX(UserIndex, Npclist[Centinela[index].NpcIndex].Char.CharIndex,
-								FXIDs_FXWARP, 0);
-
-						/* 'Resend the key */
-						CentinelaSendClave(UserIndex, index);
-
-						FlushBuffer(UserIndex);
-					}
-				}
-			}
-		}
-
-	}
-}
-
-void GoToNextWorkingChar() {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 03/10/2010 */
-	/* 'Va al siguiente usuario que se encuentre trabajando */
-	/* '09/27/2010: C4b3z0n - Ahora una vez que termina la lista de usuarios, si se cumplio el tiempo de reset, resetea la info y asigna un nuevo tiempo. */
-	/* '03/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
-
-	int LoopC;
-	int CentinelaIndex;
-
-	CentinelaIndex = GetIdleCentinela(1);
-
-	for (LoopC = (1); LoopC <= (LastUser); LoopC++) {
-
-		/* ' Usuario trabajando y no revisado? */
-		if (UserList[LoopC].flags.UserLogged && UserList[LoopC].Counters.Trabajando > 0
-				&& UserTienePrivilegio(LoopC, PlayerType_User)) {
-			if (!UserList[LoopC].flags.CentinelaOK && UserList[LoopC].flags.CentinelaIndex == 0) {
-				/* 'Inicializamos */
-				Centinela[CentinelaIndex].RevisandoUserIndex = LoopC;
-				Centinela[CentinelaIndex].TiempoRestante = TIEMPO_INICIAL;
-				Centinela[CentinelaIndex].clave = RandomNumber(1, 32000);
-				Centinela[CentinelaIndex].SpawnTime = vb6::GetTickCount();
-				Centinela[CentinelaIndex].Activo = true;
-
-				/* 'Ponemos al centinela en posición */
-				WarpCentinela(LoopC, CentinelaIndex);
-
-				/* ' Spawneo? */
-				if (Centinela[CentinelaIndex].NpcIndex != 0) {
-					/* 'Mandamos el mensaje (el centinela habla y aparece en consola para que no haya dudas) */
-					WriteChatOverHead(LoopC,
-							"Saludos " + UserList[LoopC].Name
-									+ ", soy el Centinela de estas tierras. Me gustaría que escribas /CENTINELA "
-									+ vb6::CStr(Centinela[CentinelaIndex].clave)
-									+ " en no más de dos minutos.",
-							(Npclist[Centinela[CentinelaIndex].NpcIndex].Char.CharIndex), vbGreen);
-					WriteConsoleMsg(LoopC, "El centinela intenta llamar tu atención. ¡Respóndele rápido!",
-							FontTypeNames_FONTTYPE_CENTINELA);
-					FlushBuffer(LoopC);
-
-					/* ' Guardo el indice del centinela */
-					UserList[LoopC].flags.CentinelaIndex = CentinelaIndex;
-				}
-
-				/* ' Si ya se asigno un usuario a cada centinela, me voy */
-				CentinelaIndex = CentinelaIndex + 1;
-				if (CentinelaIndex > NRO_CENTINELA) {
-					return;
-				}
-
-				/* ' Si no queda nadie inactivo, me voy */
-				CentinelaIndex = GetIdleCentinela(CentinelaIndex);
-				if (CentinelaIndex == 0) {
-					return;
-				}
-
-			}
-		}
-
-	}
+    // Lo registramos en los logs.
+    LogGM(UserList[gmIndex].Name, message);
 
 }
 
-int GetIdleCentinela(int StartCheckIndex) {
-	int retval = 0;
-	/* '************************************************* */
-	/* 'Author: ZaMa */
-	/* 'Last modified: 07/10/2010 */
-	/* 'Returns the index of the first idle centinela found, starting from a given index. */
-	/* '************************************************* */
-	int index;
+void EnviarAUsuario(int Userindex, int CIndex) {
 
-	for (index = (StartCheckIndex); index <= (NRO_CENTINELA); index++) {
+    // Envia centinela a un usuario.
 
-		if (!Centinela[index].Activo) {
-			retval = index;
-			return retval;
-		}
+    // Genera el codigo.
+    Centinela[CIndex].CodigoCheck = vb6::CStr(rand() % 9999);
 
-	}
+    // Spawnea.
+    Centinela[CIndex].MiNpcIndex = SpawnNpc(NUM_NPC, DarPosicion(Userindex), true, false);
 
-	return retval;
-}
+    // Setea el flag.
+    Centinela[CIndex].Invocado = (Centinela[CIndex].MiNpcIndex != 0);
 
-void CentinelaFinalCheck(int CentiIndex) {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Al finalizar el tiempo, se retira y realiza la acción pertinente dependiendo del caso */
-	/* '03/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
+    // No spawnea, error !
+    if (!Centinela[CIndex].Invocado) {
+        Centinela[CIndex].CodigoCheck = "";
+    }
 
-	int UserIndex;
-	std::string UserName;
+    // Avisa al usuario sobre el char del centinela.
+    AvisarUsuario(Userindex, CIndex);
 
-	UserIndex = Centinela[CentiIndex].RevisandoUserIndex;
+    // Setea el tiempo.
+	Centinela[CIndex].TiempoInicio = vb6::GetTickCount();
 
-	if (!UserList[UserIndex].flags.CentinelaOK) {
+    // Setea UI del usuario
+    Centinela[CIndex].RevisandoSlot = Userindex;
 
-		UserName = UserList[UserIndex].Name;
-
-		/* 'Logueamos el evento */
-		LogCentinela("Centinela ejecuto y echó a " + UserName + " por uso de macro inasistido.");
-
-		/* 'Avisamos a los admins */
-		SendData(SendTarget_ToAdmins, 0,
-				PrepareMessageConsoleMsg(
-						"Servidor> El centinela ha ejecutado a " + UserName + " y lo echó del juego.",
-						FontTypeNames_FONTTYPE_SERVER));
-
-		/* ' Evitamos loguear el logout */
-		Centinela[CentiIndex].RevisandoUserIndex = 0;
-
-		WriteShowMessageBox(UserIndex, "Has sido ejecutado por macro inasistido y echado del juego.");
-		UserDie(UserIndex);
-		FlushBuffer(UserIndex);
-		CloseSocket(UserIndex);
-	}
-
-	Centinela[CentiIndex].clave = 0;
-	Centinela[CentiIndex].TiempoRestante = 0;
-	Centinela[CentiIndex].RevisandoUserIndex = 0;
-	Centinela[CentiIndex].Activo = false;
-
-	if (Centinela[CentiIndex].NpcIndex != 0) {
-		QuitarNPC(Centinela[CentiIndex].NpcIndex);
-		Centinela[CentiIndex].NpcIndex = 0;
-	}
-}
-
-void CentinelaCheckClave(int UserIndex, int clave) {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Corrobora la clave que le envia el usuario */
-	/* '02/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '08/10/2010: ZaMa - Agrego algunos logueos mas coherentes. */
-	/* '************************************************* */
-
-	int CentinelaIndex;
-
-	CentinelaIndex = UserList[UserIndex].flags.CentinelaIndex;
-
-	/* ' No esta siendo revisado por ningun centinela? Clickeo a alguno? */
-	if (CentinelaIndex == 0) {
-
-		/* ' Si no clickeo a ninguno, simplemente logueo el evento (Sino hago hablar al centi) */
-		CentinelaIndex = EsCentinela(UserList[UserIndex].flags.TargetNPC);
-		if (CentinelaIndex == 0) {
-			LogCentinela(
-					"El usuario " + UserList[UserIndex].Name + " respondió aunque no se le hablaba a él..");
-			return;
-		}
-
-	}
-
-	if (clave == Centinela[CentinelaIndex].clave
-			&& UserIndex == Centinela[CentinelaIndex].RevisandoUserIndex) {
-
-		if (!UserList[UserIndex].flags.CentinelaOK) {
-
-			UserList[UserIndex].flags.CentinelaOK = true;
-			WriteChatOverHead(UserIndex,
-					"¡Muchas gracias " + UserList[UserIndex].Name + "! Espero no haber sido una molestia.",
-					Npclist[Centinela[CentinelaIndex].NpcIndex].Char.CharIndex, 0x00ffffff);
-
-			Centinela[CentinelaIndex].Activo = false;
-			FlushBuffer(UserIndex);
-
-		} else {
-			/* 'Logueamos el evento */
-			LogCentinela(
-					"El usuario " + UserList[UserIndex].Name
-							+ " respondió más de una vez la contrasena correcta.");
-		}
-
-	} else {
-
-		/* 'Logueamos el evento */
-		if (UserIndex != Centinela[CentinelaIndex].RevisandoUserIndex) {
-			WriteChatOverHead(UserIndex, "No es a ti a quien estoy hablando, ¿No ves?",
-					Npclist[Centinela[CentinelaIndex].NpcIndex].Char.CharIndex, 0x00ffffff);
-			LogCentinela(
-					"El usuario " + UserList[UserIndex].Name + " respondió aunque no se le hablaba a él.");
-		} else {
-
-			if (!UserList[UserIndex].flags.CentinelaOK) {
-				/* ' Clave incorrecta, la reenvio */
-				CentinelaSendClave(UserIndex, CentinelaIndex);
-				LogCentinela(
-						"El usuario " + UserList[UserIndex].Name + " respondió una clave incorrecta: "
-								+ vb6::CStr(clave) + " - Se esperaba : "
-								+ vb6::CStr(Centinela[CentinelaIndex].clave));
-			} else {
-				LogCentinela(
-						"El usuario " + UserList[UserIndex].Name
-								+ " respondió una clave incorrecta después de haber respondido una clave correcta.");
-			}
-		}
-	}
+    // Setea los datos del user.
+    UserList[Userindex].CentinelaUsuario.CentinelaCheck = false;     				// Por defecto, no ingreso la clave.
+    UserList[Userindex].CentinelaUsuario.centinelaIndex = CIndex;                   // Setea el index del mismo.
+    UserList[Userindex].CentinelaUsuario.Codigo = Centinela[CIndex].CodigoCheck;    // Setea el codigo.
+    UserList[Userindex].CentinelaUsuario.Revisando = true;                          // Lo revisa un centinela.
 
 }
 
-void ResetCentinelaInfo() {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Cada determinada cantidad de tiempo, volvemos a revisar */
-	/* '07/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
-	int LoopC;
+void AvisarUsuarios() {
 
-	for (LoopC = (1); LoopC <= (LastUser); LoopC++) {
+    // Envia la clave a los usuarios de los centinelas
+    for (long i = 1; i <= NUM_CENTINELAS; i++) {
 
-		UserList[LoopC].flags.CentinelaOK = false;
-		UserList[LoopC].flags.CentinelaIndex = 0;
+        // Si esta invocado.
+        if (Centinela[i].Invocado) {
 
-	}
+			// Avisa.
+            AvisarUsuario(Centinela[i].RevisandoSlot, vb6::CByte(i));
+
+        }
+    };
 
 }
 
-void CentinelaSendClave(int UserIndex, int CentinelaIndex) {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Enviamos al usuario la clave vía el personaje centinela */
-	/* '02/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
+void AvisarUsuario(int userSlot, int centinelaIndex, bool IngresoFallido = false) {
 
-	if (Centinela[CentinelaIndex].NpcIndex == 0) {
-		return;
-	}
+    // Avisa al usuario la clave..
 
-	if (Centinela[CentinelaIndex].RevisandoUserIndex == UserIndex) {
 
-		if (!UserList[UserIndex].flags.CentinelaOK) {
-			WriteChatOverHead(UserIndex,
-					"¡La clave que te he dicho es /CENTINELA " + vb6::CStr(Centinela[CentinelaIndex].clave)
-							+ ", escríbelo rápido!",
-					Npclist[Centinela[CentinelaIndex].NpcIndex].Char.CharIndex, vbGreen);
-			WriteConsoleMsg(UserIndex, "El centinela intenta llamar tu atención. ¡Respondele rápido!",
-					FontTypeNames_FONTTYPE_CENTINELA);
-		} else {
-			WriteChatOverHead(UserIndex, "Te agradezco, pero ya me has respondido. Me retiraré pronto.",
-					(Npclist[Centinela[CentinelaIndex].NpcIndex].Char.CharIndex), vbGreen);
-		}
+    std::string DataSend;
 
-	} else {
-		WriteChatOverHead(UserIndex, "No es a ti a quien estoy hablando, ¿No ves?",
-				Npclist[Centinela[CentinelaIndex].NpcIndex].Char.CharIndex, vbWhite);
-	}
+    // Para avisar.
+    if (!IngresoFallido) {
+
+        // Paso la mitad de tiempo?
+        if (vb6::GetTickCount() - Centinela[centinelaIndex].TiempoInicio > (LIMITE_TIEMPO / 2)) {
+            // Prepara el paquete a enviar.
+            DataSend = PrepareMessageChatOverHead("CONTROL DE MACRO INASISTIDO, Debes escribir /CENTINELA " + Centinela[centinelaIndex].CodigoCheck + " En menos de 2 minutos.", Npclist[Centinela[centinelaIndex].MiNpcIndex].Char.CharIndex, vbYellow);
+        } else {
+            DataSend = PrepareMessageChatOverHead("CONTROL DE MACRO INASISTIDO, Tienes menos de un minuto para escribir /CENTINELA " + Centinela[centinelaIndex].CodigoCheck + ".", Npclist[Centinela[centinelaIndex].MiNpcIndex].Char.CharIndex, vbYellow);
+        }
+
+    } else {
+        DataSend = PrepareMessageChatOverHead("CONTROL DE MACRO INASISTIDO, El codigo ingresado NO es correcto, debes escribir : /CENTINELA " + Centinela[centinelaIndex].CodigoCheck + ".", Npclist[Centinela[centinelaIndex].MiNpcIndex].Char.CharIndex, vbYellow);
+
+    }
+
+    // Envia.
+    EnviarDatosASlot(userSlot, DataSend);
 
 }
 
-void PasarMinutoCentinela() {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Control del timer. Llamado cada un minuto. */
-	/* '03/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
+void ChekearUsuarios() {
 
-	int index;
-	int UserIndex;
-	int IdleCount = 0;
+    int CIndex;
 
-	if (!centinelaActivado) {
-		return;
-	}
+    for (long LoopC = 1; LoopC <= LastUser; LoopC++) {
 
-	/* ' Primero reviso los que estan chequeando usuarios */
-	for (index = (1); index <= (NRO_CENTINELA); index++) {
+            // Lo revisa el centinela?
+            if (UserList[LoopC].CentinelaUsuario.Revisando) {
+                TiempoUsuario(vb6::CInt(LoopC));
 
-		/* ' Esta activo? */
-		if (Centinela[index].Activo) {
-			Centinela[index].TiempoRestante = Centinela[index].TiempoRestante - 1;
+            } else {
 
-			/* ' Temrino el tiempo de chequeo? */
-			if (Centinela[index].TiempoRestante == 0) {
-				CentinelaFinalCheck(index);
-			} else {
+                // Esta trabajando?
+                if (UserList[LoopC].Counters.Trabajando != 0) {
 
-				UserIndex = Centinela[index].RevisandoUserIndex;
+                    // Si todavia no lo revisaron o si paso mas del tiempo sin revisar, vuelve a enviar.
+                    if (!UserList[LoopC].CentinelaUsuario.CentinelaCheck || ((vb6::GetTickCount() - UserList[LoopC].CentinelaUsuario.UltimaRevision) > REVISION_TIEMPO)) {
 
-				/* 'RECORDamos al user que debe escribir */
-				if (Distancia(Npclist[Centinela[index].NpcIndex].Pos, UserList[UserIndex].Pos) > 5) {
-					WarpCentinela(UserIndex, index);
-				}
+                        // Busca un slot para centinela y se lo envia.
+                        CIndex = ProximoCentinela();
 
-				/* 'El centinela habla y se manda a consola para que no quepan dudas */
-				WriteChatOverHead(UserIndex,
-						"¡" + UserList[UserIndex].Name
-								+ ", tienes un minuto más para responder! Debes escribir /CENTINELA "
-								+ vb6::CStr(Centinela[index].clave) + ".",
-						(Npclist[Centinela[index].NpcIndex].Char.CharIndex), vbRed);
-				WriteConsoleMsg(UserIndex,
-						"¡" + UserList[UserIndex].Name + ", tienes un minuto más para responder!",
-						FontTypeNames_FONTTYPE_CENTINELA);
-				FlushBuffer(UserIndex);
-			}
-		} else {
+                        // Si hay slot
+                        if (CIndex != 0) {
 
-			/* ' Lo reseteo aca, para que pueda hablarle al usuario chequeado aunque haya respondido bien. */
-			if (Centinela[index].NpcIndex != 0) {
-				if (Centinela[index].RevisandoUserIndex != 0) {
-					UserList[Centinela[index].RevisandoUserIndex].flags.CentinelaIndex = 0;
-					Centinela[index].RevisandoUserIndex = 0;
-				}
-				QuitarNPC(Centinela[index].NpcIndex);
-				Centinela[index].NpcIndex = 0;
-			}
+                            // Envia
+                            EnviarAUsuario(vb6::CInt(LoopC), CIndex);
 
-			IdleCount = IdleCount + 1;
-		}
+                        }
 
-	}
+                    }
 
-	/* 'Verificamos si ya debemos resetear la lista */
-	int TActual;
-	TActual = vb6::GetTickCount();
+                }
 
-	if (checkInterval(centinelaStartTime, TActual, centinelaInterval)) {
-		/* ' Espero a que terminen de controlar todos los centinelas */
-		DetenerAsignacion = true;
-	}
+            }
 
-	/* ' Si hay algun centinela libre, se fija si no hay trabajadores disponibles para chequear */
-	if (IdleCount != 0) {
-
-		/* ' Si es tiempo de resetear flags, chequeo que no quede nadie activo */
-		if (DetenerAsignacion) {
-
-			/* ' No se completaron los ultimos chequeos */
-			if (IdleCount < NRO_CENTINELA) {
-				return;
-			}
-
-			/* ' Resetea todos los flags */
-			ResetCentinelaInfo();
-			DetenerAsignacion = false;
-
-			/* ' Renuevo el contador de reseteo */
-			RenovarResetTimer();
-
-		}
-
-		GoToNextWorkingChar();
-
-	}
-}
-
-void WarpCentinela(int UserIndex, int CentinelaIndex) {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Inciamos la revisión del usuario UserIndex */
-	/* '02/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '************************************************* */
-
-	/* 'Evitamos conflictos de índices */
-	if (Centinela[CentinelaIndex].NpcIndex != 0) {
-		QuitarNPC(Centinela[CentinelaIndex].NpcIndex);
-		Centinela[CentinelaIndex].NpcIndex = 0;
-	}
-
-	/* ' Spawn it */
-	Centinela[CentinelaIndex].NpcIndex = SpawnNpc(NPC_CENTINELA, UserList[UserIndex].Pos, true, false);
-
-	/* 'Si no pudimos crear el NPC, seguimos esperando a poder hacerlo */
-	if (Centinela[CentinelaIndex].NpcIndex == 0) {
-		Centinela[CentinelaIndex].RevisandoUserIndex = 0;
-		Centinela[CentinelaIndex].Activo = false;
-	}
+    }
 
 }
 
-void CentinelaUserLogout(int CentinelaIndex) {
-	/* '************************************************* */
-	/* 'Author: Unknown */
-	/* 'Last modified: 02/11/2010 */
-	/* 'El usuario al que revisabamos se desconectó */
-	/* '02/10/2010: ZaMa - Adaptado para que funcione mas de un centinela en paralelo. */
-	/* '02/11/2010: ZaMa - Ahora no loguea que el usuario cerro si puso bien la clave. */
-	/* '************************************************* */
+void IngresaClave(int UserIndex, std::string Clave) {
 
-	if (Centinela[CentinelaIndex].RevisandoUserIndex != 0) {
+    // Checkea la clave que ingreso el usuario.
 
-		/* 'Logueamos el evento */
-		if (!UserList[Centinela[CentinelaIndex].RevisandoUserIndex].flags.CentinelaOK) {
-			LogCentinela(
-					"El usuario " + UserList[Centinela[CentinelaIndex].RevisandoUserIndex].Name
-							+ " se desolgueó al pedirsele la contrasena.");
-		}
+    Clave = vb6::UCase(Clave);
 
-		/* 'Reseteamos y esperamos a otro PasarMinuto para ir al siguiente user */
-		Centinela[CentinelaIndex].clave = 0;
-		Centinela[CentinelaIndex].TiempoRestante = 0;
-		Centinela[CentinelaIndex].RevisandoUserIndex = 0;
-		Centinela[CentinelaIndex].Activo = false;
+    int centinelaIndex;
 
-		if (Centinela[CentinelaIndex].NpcIndex != 0) {
-			QuitarNPC(Centinela[CentinelaIndex].NpcIndex);
-			Centinela[CentinelaIndex].NpcIndex = 0;
-		}
+    centinelaIndex = UserList[UserIndex].CentinelaUsuario.centinelaIndex;
 
-	}
+    // No tiene centinela.
+    if (!centinelaIndex != 0) { return; }
+
+    // No esta revisandolo.
+    if (!UserList[UserIndex].CentinelaUsuario.Revisando) { return; }
+
+    // Checkea el codigo
+    if (CheckCodigo(Clave, centinelaIndex)) {
+
+        // Quita el centinela.
+        AprobarUsuario(UserIndex, centinelaIndex);
+
+    } else {
+
+        // Avisa.
+        AvisarUsuario(UserIndex, centinelaIndex, true);
+
+    }
 
 }
 
-void ResetCentinelas() {
-	/* '************************************************* */
-	/* 'Author: ZaMa */
-	/* 'Last modified: 02/10/2010 */
-	/* 'Resetea todos los centinelas */
-	/* '************************************************* */
-	int index;
-	int UserIndex;
+void AprobarUsuario(int UserIndex, int CIndex) {
 
-	for (index = (vb6::LBound(Centinela)); index <= (vb6::UBound(Centinela)); index++) {
+    // Aprueba el control de un usuario.
 
-		/* ' Si esta activo, reseteo toda la info y quito el npc */
-		if (Centinela[index].Activo) {
+    // Quita el char.
+    LimpiarIndice(UserList[UserIndex].CentinelaUsuario.centinelaIndex);
 
-			Centinela[index].Activo = false;
+    UserList[UserIndex].CentinelaUsuario.CentinelaCheck = true;
+    UserList[UserIndex].CentinelaUsuario.centinelaIndex = 0;
+    UserList[UserIndex].CentinelaUsuario.Codigo = "";
+    UserList[UserIndex].CentinelaUsuario.Revisando = false;
+    UserList[UserIndex].CentinelaUsuario.UltimaRevision = vb6::GetTickCount();
 
-			UserIndex = Centinela[index].RevisandoUserIndex;
-			if (UserIndex != 0) {
-				UserList[UserIndex].flags.CentinelaIndex = 0;
-				UserList[UserIndex].flags.CentinelaOK = false;
-				Centinela[index].RevisandoUserIndex = 0;
-			}
-
-			Centinela[index].clave = 0;
-			Centinela[index].TiempoRestante = 0;
-
-			if (Centinela[index].NpcIndex != 0) {
-				QuitarNPC(Centinela[index].NpcIndex);
-				Centinela[index].NpcIndex = 0;
-			}
-
-		}
-
-	}
-
-	DetenerAsignacion = false;
-	RenovarResetTimer();
+    WriteConsoleMsg(UserIndex, "El control ha finalizado.", FontTypeNames::FontTypeNames_FONTTYPE_DIOS);
 
 }
 
-int EsCentinela(int NpcIndex) {
-	int retval = 0;
-	/* '************************************************* */
-	/* 'Author: ZaMa */
-	/* 'Last modified: 07/10/2010 */
-	/* 'Devuelve True si el indice pertenece a un centinela. */
-	/* '************************************************* */
+void LimpiarIndice(int centinelaIndex) {
 
-	int index;
+    // Limpia un slot.
 
-	if (NpcIndex == 0) {
-		return retval;
-	}
+    Centinela[centinelaIndex].Invocado = false;
+    Centinela[centinelaIndex].CodigoCheck = "";
+    Centinela[centinelaIndex].RevisandoSlot = 0;
+    Centinela[centinelaIndex].TiempoInicio = 0;
 
-	for (index = (1); index <= (NRO_CENTINELA); index++) {
+    // Estaba el char?
+    if (Centinela[centinelaIndex].MiNpcIndex != 0) {
+        QuitarNPC(Centinela[centinelaIndex].MiNpcIndex);
+    }
 
-		if (Centinela[index].NpcIndex == NpcIndex) {
-			retval = index;
-			return retval;
-		}
-
-	}
-
-	return retval;
 }
 
-void RenovarResetTimer() {
-	/* '************************************************* */
-	/* 'Author: ZaMa */
-	/* 'Last modified: 07/10/2010 */
-	/* 'Renueva el timer que resetea el flag "CentinelaOk" de todos los usuarios. */
-	/* '************************************************* */
-	centinelaInterval = (RandomNumber(0, TIEMPO_PASAR_RANDOM) + TIEMPO_PASAR_BASE) * 60 * 1000;
+void TiempoUsuario(int UserIndex) {
+
+    // Checkea el tiempo para contestar de un usuario.
+
+    int centinelaIndex;
+
+    centinelaIndex = UserList[UserIndex].CentinelaUsuario.centinelaIndex;
+
+    // No hay indice ! WTF XD
+    if (!centinelaIndex != 0) { return; }
+
+    // Acabo el tiempo y no ingreso la clave.
+    if ((vb6::GetTickCount() - Centinela[centinelaIndex].TiempoInicio) > LIMITE_TIEMPO) {
+        UsuarioInActivo(UserIndex);
+    }
+
+}
+
+void UsuarioInActivo(int Userindex) {
+
+    // No contesto el usuario, se lo pena.
+
+    // Telep al mapa.
+    WarpUserChar(Userindex, MAPA_EXPLOTAR, X_EXPLOTAR, Y_EXPLOTAR, true);
+
+
+    // No creo que tirar los items sea justo, con encarcelarlo y matarlo es mas que suficiente. (Recox)
+    // Aparte de que si muere desaparecen los items...
+
+    // Muere.
+    // UserDie(Userindex)
+
+    // Tira los items.
+    // TirarTodosLosItems(Userindex)
+
+    // Lo encarcela.
+    Encarcelar(Userindex, CARCEL_TIEMPO, "El centinela");
+
+    // Borra el centinela.
+    if (UserList[Userindex].CentinelaUsuario.centinelaIndex != 0) {
+        LimpiarIndice(UserList[Userindex].CentinelaUsuario.centinelaIndex);
+    }
+
+    // Deja un mensaje.
+    WriteConsoleMsg(Userindex, "El centinela te ha ejecutado y encarcelado por Macro Inasistido.", FontTypeNames::FontTypeNames_FONTTYPE_DIOS);
+
+    // Limpia el tipo del usuario.
+    struct CentinelaUser clearType;
+
+    UserList[Userindex].CentinelaUsuario = clearType;
+
+    UserList[Userindex].CentinelaUsuario.CentinelaCheck = true;
+
+}
+
+WorldPos DarPosicion(int UserIndex) {
+
+    // Devuelve la posicion para spawnear al centinela.
+	int X = UserList[UserIndex].Pos.X + 1;
+	int Y = UserList[UserIndex].Pos.Y;
+
+	return WorldPos(Position(X, Y));
+
+}
+
+int ProximoCentinela() {
+
+    // Devuelve un slot para un centinela.
+    for (long i = 1; i <= NUM_CENTINELAS; i++) {
+
+        // Si no esta invocado.
+        if (!Centinela[i].Invocado) {
+
+			// Devuelve el slot
+            return vb6::CByte(i);
+
+        }
+
+    };
+
+    return 0;
+
+}
+
+bool CheckCodigo(std::string Ingresada, int CIndex) {
+
+    // Devuelve si el codigo es correcto.
+    return !(Ingresada != Centinela[CIndex].CodigoCheck);
+
 }

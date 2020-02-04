@@ -1262,24 +1262,16 @@ void LookatTile(int UserIndex, int Map, int X, int Y) {
 				WriteChatOverHead(UserIndex, Stat, Npclist[TempCharIndex].Char.CharIndex, 0x00ffffff);
 			} else {
 
-				int CentinelaIndex;
-				CentinelaIndex = EsCentinela(TempCharIndex);
+                if (Npclist[TempCharIndex].MaestroUser > 0) {
+                    WriteConsoleMsg(UserIndex, estatus + Npclist[TempCharIndex].Name + " es mascota de "
+                                                + UserList[Npclist[TempCharIndex].MaestroUser].Name + ".",
+                                                FontTypeNames_FONTTYPE_INFO);
+                } else {
+                    sDesc = estatus + Npclist[TempCharIndex].Name;
 
-				if (CentinelaIndex != 0) {
-					/* 'Enviamos nuevamente el texto del centinela según quien pregunta */
-					CentinelaSendClave(UserIndex, CentinelaIndex);
-				} else {
-					if (Npclist[TempCharIndex].MaestroUser > 0) {
-						WriteConsoleMsg(UserIndex,
-								estatus + Npclist[TempCharIndex].Name + " es mascota de "
-										+ UserList[Npclist[TempCharIndex].MaestroUser].Name + ".",
-								FontTypeNames_FONTTYPE_INFO);
-					} else {
-						sDesc = estatus + Npclist[TempCharIndex].Name;
-						if (Npclist[TempCharIndex].Owner > 0) {
-							sDesc = sDesc + " le pertenece a " + UserList[Npclist[TempCharIndex].Owner].Name;
-						}
-						sDesc = sDesc + ".";
+                    if (Npclist[TempCharIndex].Owner > 0) {
+                        sDesc = sDesc + " le pertenece a " + UserList[Npclist[TempCharIndex].Owner].Name;
+                    }
 
 						WriteConsoleMsg(UserIndex, sDesc, FontTypeNames_FONTTYPE_INFO);
 

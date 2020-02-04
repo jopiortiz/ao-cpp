@@ -6728,7 +6728,7 @@ void HandleCentinelReport(int UserIndex) {
 	/* 'Remove packet ID */
 	UserList[UserIndex].sockctx->incomingData->ReadByte();
 
-	CentinelaCheckClave(UserIndex, UserList[UserIndex].sockctx->incomingData->ReadInteger());
+	//CentinelaCheckClave(UserIndex, UserList[UserIndex].sockctx->incomingData->ReadInteger());
 }
 
 /* '' */

@@ -199,7 +199,7 @@ void Auditoria_Timer() {
 
 	if (centinelSecs == 5) {
 		/* 'Every 5 seconds, we try to call the player's attention so it will report the code. */
-		CallUserAttention();
+		AvisarUsuarios();
 
 		centinelSecs = 0;
 	}
@@ -293,7 +293,7 @@ void AutoSave_Timer() {
 	AreasOptimizacion();
 
 	/* 'Actualizamos el centinela */
-	PasarMinutoCentinela();
+	ChekearUsuarios();
 
 	if (Minutos == MinutosWs - 1) {
 		SendData(SendTarget_ToAll, 0,

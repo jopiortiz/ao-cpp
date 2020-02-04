@@ -533,7 +533,7 @@ bool EnTesting;
 vb6::array<struct User> UserList;
 /* 'NPCS */
 vb6::array<struct npc> Npclist;
-vb6::array<vb6::array<vb6::array<struct MapBlock> > > MapData;
+vb6::array<vb6::array< vb6::array<struct MapBlock> > > MapData;
 vb6::array<struct MapInfo> MapInfo;
 vb6::array<struct tHechizo> Hechizos;
 vb6::array<int> CharList;

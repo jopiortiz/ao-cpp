@@ -520,9 +520,9 @@ void CloseSocket(int UserIndex) {
 	/* 'Last Modification: - */
 	/* ' */
 	/* '*************************************************** */
-	
+
 	// std::cerr << "CloseSocket" << std::endl;
-	
+
 	if (UserList[UserIndex].ConnID != -1) {
 		CloseSocketSL(UserIndex);
 	}
@@ -534,7 +534,7 @@ void CloseSocket(int UserIndex) {
 	CentinelaIndex = UserList[UserIndex].flags.CentinelaIndex;
 
 	if (CentinelaIndex != 0) {
-		CentinelaUserLogout(CentinelaIndex);
+		UsuarioInActivo(UserIndex);
 	}
 
 	/* 'mato los comercios seguros */

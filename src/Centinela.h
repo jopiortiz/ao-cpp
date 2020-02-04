@@ -21,50 +21,25 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <cstdlib>
 #include "vb6compat.h"
 #include "enums.h"
-/* [(0, 'ATTRIBUTE'), (1, 'VB_Name'), (5, '='), (4, '"modCentinela"')] */
-/* '***************************************************************** */
-/* 'modCentinela.bas - ImperiumAO - v1.2 */
-/* ' */
-/* 'Funciónes de control para usuarios que se encuentran trabajando */
-/* ' */
-
-/* '***************************************************************** */
-/* 'Augusto Rando(barrin@imperiumao.com.ar) */
-/* '   ImperiumAO 1.2 */
-/* '   - First Relase */
-/* ' */
-/* 'Juan Martín Sotuyo Dodero (juansotuyo@gmail.com) */
-/* '   Alkon AO 0.11.5 */
-/* '   - Small improvements and added logs to detect possible cheaters */
-/* ' */
-/* 'Juan Martín Sotuyo Dodero (juansotuyo@gmail.com) */
-/* '   Alkon AO 0.12.0 */
-/* '   - Added several messages to spam users until they reply */
-/* ' */
-/* 'ZaMa */
-/* '   Alkon AO 0.13.0 */
-/* '   - Added several paralel checks */
-/* '***************************************************************** */
-
-/* 'Índice del NPC en el .dat */
-
-/* 'Tiempo inicial en minutos. No reducir sin antes revisar el timer que maneja estos datos. */
-/* 'Tiempo minimo fijo para volver a pasar */
-/* 'Tiempo máximo para el random para que el centinela vuelva a pasar */
 
  struct tCentinela {
- /* ' Index of centinela en el servidor */
- int NpcIndex;
- /* '¿Qué índice revisamos? */
- int RevisandoUserIndex;
- /* '¿Cuántos minutos le quedan al usuario? */
- int TiempoRestante;
- /* 'Clave que debe escribir */
- int clave;
- int SpawnTime;
- bool Activo;
+    /* Index of centinela en el servidor */
+    int MiNpcIndex;
+
+    /* Esta invocado? */
+    bool Invocado;
+
+    /* UI Del usuario */
+    int RevisandoSlot;
+
+    /* Desde que empezo el chekeo al usuario */
+    int TiempoInicio;
+
+    /* Codigo que debe ingresar el usuario */
+    std::string CodigoCheck;
 };
 
 extern bool centinelaActivado;
@@ -74,30 +49,32 @@ extern bool centinelaActivado;
 extern const int NRO_CENTINELA;
 extern vb6::array<struct tCentinela> Centinela;
 
- void CallUserAttention();
- 
- void GoToNextWorkingChar();
- 
- int GetIdleCentinela(int StartCheckIndex);
- 
- void CentinelaFinalCheck(int CentiIndex);
- 
- void CentinelaCheckClave(int UserIndex, int clave);
- 
- void ResetCentinelaInfo();
- 
- void CentinelaSendClave(int UserIndex, int CentinelaIndex);
- 
- void PasarMinutoCentinela();
- 
- void WarpCentinela(int UserIndex, int CentinelaIndex);
- 
- void CentinelaUserLogout(int CentinelaIndex);
- 
- void ResetCentinelas();
- 
- int EsCentinela(int NpcIndex);
- 
- void RenovarResetTimer();
+ void CambiarEstado(int gmIndex);
+
+ void EnviarAUsuario(int Userindex, int CIndex);
+
+ void AvisarUsuarios();
+
+ void AvisarUsuario(int userSlot, int centinelaIndex, bool IngresoFallido = false);
+
+ void ChekearUsuarios();
+
+ void IngresaClave(int UserIndex, std::string Clave);
+
+ void AprobarUsuario(int UserIndex, int CIndex);
+
+ void LimpiarIndice(int centinelaIndex);
+
+ void TiempoUsuario(int UserIndex);
+
+ void UsuarioInActivo(int Userindex);
+
+ std::string GenerarClave();
+
+ WorldPos DarPosicion(int UserIndex);
+
+ int ProximoCentinela();
+
+ bool CheckCodigo(std::string Ingresada, int CIndex);
 
 #endif

@@ -2187,7 +2187,7 @@ void CerrarUserIndexIniciar(int UserIndex) {
 
 	if (UserList[UserIndex].flags.UserLogged) {
 		if (UserList[UserIndex].flags.CentinelaIndex != 0) {
-			CentinelaUserLogout(UserList[UserIndex].flags.CentinelaIndex);
+			UsuarioInActivo(UserList[UserIndex].flags.CentinelaIndex);
 		}
 
 		/* 'exit secure commerce */

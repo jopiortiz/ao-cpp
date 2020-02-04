@@ -599,6 +599,17 @@ struct Char {
 	eHeading heading = eHeading_None;
 };
 
+// Nuevo Centinela
+struct CentinelaUser {
+
+    int centinelaIndex;      // Centinela del usuario.
+    std::string Codigo;      // Codigo que debe ingresar.
+    bool CentinelaCheck;      // Si respondio o no.
+    bool Revisando;          // Si tiene centinela.
+    long UltimaRevision;     // Ultima revision al usuario.
+
+};
+
 /* 'Tipos de objetos */
 struct ObjData {
 	ObjData() {
@@ -1109,6 +1120,8 @@ struct User {
 	}
 	std::string Name;
 	int ID = 0;
+    
+	struct CentinelaUser CentinelaUsuario;
 
 	/* 'Permite que los GMs oculten su nick con el comando /SHOWNAME */
 	bool showName = false;
