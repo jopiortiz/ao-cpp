@@ -1273,15 +1273,14 @@ void LookatTile(int UserIndex, int Map, int X, int Y) {
                         sDesc = sDesc + " le pertenece a " + UserList[Npclist[TempCharIndex].Owner].Name;
                     }
 
-						WriteConsoleMsg(UserIndex, sDesc, FontTypeNames_FONTTYPE_INFO);
+                    WriteConsoleMsg(UserIndex, sDesc, FontTypeNames_FONTTYPE_INFO);
 
-						if (UserTienePrivilegio(UserIndex, PlayerType_Dios) || UserTienePrivilegio(UserIndex, PlayerType_Admin)) {
-							WriteConsoleMsg(UserIndex,
-									"Le pegó primero: " + Npclist[TempCharIndex].flags.AttackedFirstBy + ".",
-									FontTypeNames_FONTTYPE_INFO);
-						}
-					}
-				}
+                    if (UserTienePrivilegio(UserIndex, PlayerType_Dios) || UserTienePrivilegio(UserIndex, PlayerType_Admin)) {
+                        WriteConsoleMsg(UserIndex, "Le pegó primero: " + Npclist[TempCharIndex].flags.AttackedFirstBy + ".",
+                                        FontTypeNames_FONTTYPE_INFO);
+                    }
+                }
+
 			}
 
 			FoundSomething = 1;

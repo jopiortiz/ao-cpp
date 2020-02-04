@@ -13751,7 +13751,7 @@ void HandleToggleCentinelActivated(int UserIndex) {
 
 	centinelaActivado = !centinelaActivado;
 
-	ResetCentinelas();
+	//ResetCentinelas();
 
 	if (centinelaActivado) {
 		SendData(SendTarget_ToAdmins, 0,
