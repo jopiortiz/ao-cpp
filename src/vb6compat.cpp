@@ -24,8 +24,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
-#include <boost/filesystem.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 #include "vb6compat.h"
@@ -69,23 +69,15 @@ std::size_t GetTickCount() {
 
 void Name(std::string oldName, std::string newName) {
 	// Rename a file
-	// throw std::runtime_error("Name not implemented");
-	// boost::system::error_code ec;
-	boost::filesystem::rename(oldName, newName);
+	std::filesystem::rename(oldName, newName);
 }
 
 void Kill(std::string FileName) {
 	// Delete a file
-	// throw std::runtime_error("Kill not implemented");
-	boost::filesystem::remove(FileName);
+	std::filesystem::remove(FileName);
 }
 
 void FileCopy(std::string oldfile, std::string newfile) {
-	// BOOST copy_file is broken while using from C++11. I don't really care about performance here so
-	// I'm just using C++ stdlib.
-
-	// boost::filesystem::copy_file(oldfile, newfile, boost::filesystem::copy_option::overwrite_if_exists);
-
     std::ifstream  src(oldfile, std::ios::binary);
     std::ofstream  dst(newfile, std::ios::binary);
 

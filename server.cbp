@@ -41,7 +41,6 @@
 					<Add library="ws2_32" />
 					<Add library="iconv" />
 					<Add library="boost_system-mt" />
-					<Add library="boost_filesystem-mt" />
 					<Add library="boost_locale-mt" />
 					<Add library="event" />
 				</Linker>

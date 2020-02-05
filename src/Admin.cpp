@@ -20,8 +20,6 @@
 
 #include <fstream>
 
-#include <boost/filesystem.hpp>
-
 vb6::array<struct tMotd> MOTD;
 bool EnviarPopupOfTheDay = false;
 std::string PopupOfTheDayMessage;
@@ -233,11 +231,11 @@ void Encarcelar(int UserIndex, int Minutos, std::string GmName) {
 
 	if (vb6::LenB(GmName) == 0) {
 		WriteConsoleMsg(UserIndex, "Has sido encarcelado, deberás permanecer en la cárcel " + vb6::CStr(Minutos) + " minutos.", FontTypeNames_FONTTYPE_INFO);
-	
+
 	} else {
 		WriteConsoleMsg(UserIndex, GmName + " te ha encarcelado, deberás permanecer en la cárcel " + vb6::CStr(Minutos) + " minutos.", FontTypeNames_FONTTYPE_INFO);
 	}
-	
+
 	if (UserList[UserIndex].flags.Traveling == 1) {
 		UserList[UserIndex].flags.Traveling = 0;
 		UserList[UserIndex].Counters.goHome = 0;

@@ -93,15 +93,9 @@ int main(int argc, char **argv) {
 		AppPath = argv[1];
 	}
 
-#ifdef WIN32
-	if (AppPath.substr(AppPath.length() - 1, 1) != '\'') {
-		AppPath += '\'';
-	}
-#else
     if (AppPath.substr(AppPath.length() - 1, 1) != "/") {
 		AppPath += "/";
 	}
-#endif
 
 	vb6::InitializeTickCount();
 
