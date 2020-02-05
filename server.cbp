@@ -18,10 +18,9 @@
 					<Add option="-D_GLIBCXX_DEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-lboost_system" />
-					<Add option="-lboost_filesystem" />
-					<Add option="-lboost_locale" />
-					<Add option="-levent" />
+					<Add library="boost_system" />
+					<Add library="boost_locale" />
+					<Add library="event" />
 				</Linker>
 			</Target>
 			<Target title="Windows">
@@ -35,6 +34,7 @@
 					<Add option="-march=native" />
 					<Add option="-DWIN32" />
 					<Add option="-D_GLIBCXX_DEBUG" />
+					<Add directory="librerias/lib" />
 					<Add directory="../../../../../../lib" />
 				</Compiler>
 				<Linker>
