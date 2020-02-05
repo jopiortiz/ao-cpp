@@ -1120,7 +1120,7 @@ struct User {
 	}
 	std::string Name;
 	int ID = 0;
-    
+
 	struct CentinelaUser CentinelaUsuario;
 
 	/* 'Permite que los GMs oculten su nick con el comando /SHOWNAME */
@@ -1609,6 +1609,6 @@ extern const int MIN_GOLD_AMOUNT_LOG;
 //extern std::string GUILDPATH;
 //extern std::string GUILDINFOFILE;
 
-extern std::string DakaraBasePath;
+extern std::string AppPath;
 
 #endif

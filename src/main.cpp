@@ -16,7 +16,7 @@
 ******************************************************************************/
 
 //============================================================================
-// Name        : dakara-server.cpp
+// Name        : main.cpp
 // Author      : Ale
 // Version     :
 // Copyright   : Your copyright notice
@@ -33,7 +33,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 using namespace std;
 
@@ -88,13 +88,20 @@ int main(int argc, char **argv) {
 	atexit(atexit_func);
 
 	if (argc < 2) {
-		DakaraBasePath = boost::filesystem::current_path().string();
+		AppPath = std::filesystem::current_path().string();
 	} else {
-		DakaraBasePath = argv[1];
+		AppPath = argv[1];
 	}
-	if (DakaraBasePath.substr(DakaraBasePath.length() - 1, 1) != "/") {
-		DakaraBasePath += "/";
+
+#ifdef WIN32
+	if (AppPath.substr(AppPath.length() - 1, 1) != '\'') {
+		AppPath += '\'';
 	}
+#else
+    if (AppPath.substr(AppPath.length() - 1, 1) != "/") {
+		AppPath += "/";
+	}
+#endif
 
 	vb6::InitializeTickCount();
 

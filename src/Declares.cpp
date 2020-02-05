@@ -652,4 +652,4 @@ const int MIN_GOLD_AMOUNT_LOG = 10000;
 //std::string GUILDPATH;
 //std::string GUILDINFOFILE;
 
-std::string DakaraBasePath;
+std::string AppPath;

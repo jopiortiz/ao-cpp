@@ -23,7 +23,7 @@
 #include "Crypto.h"
 
 std::string GetAppPath() {
-	return DakaraBasePath;
+	return AppPath;
 }
 
 std::string GetGuildsPath(std::string guildName, EGUILDPATH fileType) {
@@ -54,15 +54,15 @@ std::string GetGuildsPath(std::string guildName, EGUILDPATH fileType) {
 		throw std::runtime_error("unknown fileType");
 	}
 
-	return DakaraBasePath + "guilds/" + guildName + ext;
+	return AppPath + "guilds/" + guildName + ext;
 }
 
 std::string GetIniPath(std::string baseName) {
-	return DakaraBasePath + baseName;
+	return AppPath + baseName;
 }
 
 std::string GetCharPath(std::string baseName) {
-	return DakaraBasePath + "Charfile/" + vb6::UCase(baseName) + ".chr";
+	return AppPath + "Charfile/" + vb6::UCase(baseName) + ".chr";
 }
 
 std::string GetMapPath(int mapNum, MAPPATH filetype, bool backup) {
@@ -70,13 +70,13 @@ std::string GetMapPath(int mapNum, MAPPATH filetype, bool backup) {
 
 	switch (filetype) {
 	case MAPPATH::DAT:
-		return DakaraBasePath + base + std::to_string(mapNum) + ".dat";
+		return AppPath + base + std::to_string(mapNum) + ".dat";
 
 	case MAPPATH::INF:
-		return DakaraBasePath + base + std::to_string(mapNum) + ".inf";
+		return AppPath + base + std::to_string(mapNum) + ".inf";
 
 	case MAPPATH::MAP:
-		return DakaraBasePath + base + std::to_string(mapNum) + ".map";
+		return AppPath + base + std::to_string(mapNum) + ".map";
 
 	default:
 		throw std::runtime_error("unknown fileType");
@@ -84,7 +84,7 @@ std::string GetMapPath(int mapNum, MAPPATH filetype, bool backup) {
 }
 
 std::string GetDatPath(DATPATH fileType) {
-	std::string datpath = DakaraBasePath + "dat/";
+	std::string datpath = AppPath + "dat/";
 
 	switch (fileType) {
 	case DATPATH::apuestas:
@@ -141,18 +141,18 @@ std::string GetDatPath(DATPATH fileType) {
 }
 
 std::string GetLogFileName(const std::string& baseName) {
-	return DakaraBasePath + "logs/" + baseName + ".log";
+	return AppPath + "logs/" + baseName + ".log";
 }
 
 std::string GetForumPath(std::string ForoID) {
 	// vb6::App().Path + "/foros/" + sForoID + ".for";
-	return DakaraBasePath + "foros/" + (ForoID) + ".for";
+	return AppPath + "foros/" + (ForoID) + ".for";
 }
 
 std::string GetForumMsgPath(std::string ForoID, int PostIndex, bool post) {
 	// PostPath = vb6::App().Path + "/foros/" + vb6::CStr(sForoID) + "-" + vb6::CStr(PostIndex) + ".for";
 	// vb6::App().Path + "/Foros/" + vb6::CStr(Foros[ForumIndex].ID) + "-" + vb6::CStr(PostIndex) + "a.for"
-	return DakaraBasePath + "foros/" + (ForoID) + "-" + std::to_string(PostIndex) + (post ? "" : "a") + ".for";
+	return AppPath + "foros/" + (ForoID) + "-" + std::to_string(PostIndex) + (post ? "" : "a") + ".for";
 }
 
 
